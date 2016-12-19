@@ -1,0 +1,415 @@
+---
+title: "Chapter 2: Manipulating Your Data"
+author: "Tyson S. Barrett"
+date: "Summer 2017"
+output:
+  beamer_presentation:
+    theme: "metropolis"
+    toc: true
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+    df_print: default
+    keep_tex: true
+    incremental: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment="")
+```
+
+# Introduction
+
+## The Newest and Brightest
+
+\centerline{\includegraphics[height=2in]{Figures/tidyr_logo.png} \text{  \LARGE    }
+\includegraphics[height=2in]{Figures/pipe_logo.png}}
+
+
+## The Newest and Brightest
+### Tidyverse
+* In order to manipulate your data in the cleanest, most up-to-date manner, we are going to be using the "tidyverse" group of methods. 
+* The tidyverse[^hadley] is a group of packages[^pack] that provide a simple syntax that can do many basic (and complex) data manipulating. 
+* The group of packages can be downloaded via:
+```{r, eval=FALSE}
+install.packages("tidyverse")
+```
+
+After downloading it, simply use:
+```{r}
+library(tidyverse)
+```
+
+[^hadley]: Hadley Wickham (2016). tidyverse: Easily Install and Load 'Tidyverse' Packages. R package version 1.0.0. https://CRAN.R-project.org/package=tidyverse
+[^pack]: Remember, a package is an extension to `R` that gives you more functions that you can easily load into `R`.
+
+## Tidyverse
+
+Note that when we loaded tidyverse it loaded 6 packages and told you of "conflicts". These conflicts are where two or more loaded packages have the same function in them. The last loaded package is the one that `R` will use by default. For example, if we loaded two packages--`awesome` and `amazing`--and both had the function--`make_really_great` and we loaded `awesome` and then `amazing` as so:
+
+```{r, eval=FALSE}
+library(awesome)
+library(amazing)
+```
+
+`R` will automatically use the function from `amazing`. 
+
+## Conflicts
+
+We can still access the `awesome` version of the function (because even though the name is the same, they won't necessarily do the same things for you). We can do this by:
+
+```{r, eval=FALSE}
+awesome::make_really_great(arg)
+```
+
+That's a bit of an aside, but know that you can always get at a function even if it is "masked" from your current session.
+
+
+# Tidy Methods
+## The Tidy Data Way
+
+I'm introducing this to you for a couple reasons.
+
+1. It simplifies the code and makes the code more readable. As Mr. Wickham says, **there are always at least two collaborators on any project: you and future you.**
+2. It is the cutting edge. The most influential individuals in the `R` world, including the makers and maintainers of `RStudio`, use these methods and syntax.
+
+The majority of what you'll need to do with data as a researcher will be covered by these functions. 
+
+## Methods for Tidying
+There are several methods that help tidy up your data:
+
+1. Piping
+2. Selecting and Filtering
+3. Grouping and Summarizing
+4. Reshaping
+5. Joining (merging)
+
+To help illustrate each aspect, we are going to use real data from the National Health and Nutrition Examiniation Survey (NHANES). I've provided this data at [https://tysonstanley.github.io/assets/Data/NHANES.zip](https://tysonstanley.github.io/assets/Data/NHANES.zip). I've cleaned it up somewhat already.
+
+# Example
+## Example: NHANES
+
+### Import
+First, we will set our working directory with `setwd`. This tells `R` where to look for files, including your data files.
+```{r, eval=FALSE}
+setwd("~/Dropbox/GitHub/blog_rstats/assets/Data/")
+```
+
+```{r, echo=FALSE}
+## Run but not shown
+library(foreign)
+dem_df <- read.xport("~/Box Sync/GitHub/blog_rstats/assets/Data/NHANES_demographics_11.xpt")
+med_df <- read.xport("~/Box Sync/GitHub/blog_rstats/assets/Data/NHANES_MedHeath_11.xpt")
+men_df <- read.xport("~/Box Sync/GitHub/blog_rstats/assets/Data/NHANES_MentHealth_11.xpt")
+act_df <- read.xport("~/Box Sync/GitHub/blog_rstats/assets/Data/NHANES_PhysActivity_11.xpt")
+```
+
+```{r, eval=FALSE}
+library(foreign)
+dem_df <- read.xport("NHANES_demographics_11.xpt")
+med_df <- read.xport("NHANES_MedHeath_11.xpt")
+men_df <- read.xport("NHANES_MentHealth_11.xpt")
+act_df <- read.xport("NHANES_PhysActivity_11.xpt")
+```
+
+## Example: NHANES
+
+Now we have four separate, but related, data sets in memory:
+
+1. `dem_df` containing demographic information
+2. `med_df` containing medical health information
+3. `men_df` containing mental health information
+4. `act_df` containing activity level information
+
+## Example: NHANES
+
+Since all of them have all-cap variable names, we are going to quickly change this with a little trick:
+
+```{r}
+names(dem_df) <- tolower(names(dem_df))
+names(med_df) <- tolower(names(med_df))
+names(men_df) <- tolower(names(men_df))
+names(act_df) <- tolower(names(act_df))
+```
+This takes the names of the data frame (on the right hand side), changes them to lower case and then reassigns them to the names of the data frame.[^names]
+
+[^names]: Note that these are not particularly helpful names, but they are the names provided in the original data source. If you have questions about the data, visit [http://wwwn.cdc.gov/Nchs/Nhanes/Search/Nhanes11_12.aspx](http://wwwn.cdc.gov/Nchs/Nhanes/Search/Nhanes11_12.aspx).
+
+## Example: NHANES
+### We will now go through each aspect of the tidy way of working with data using these four data sets.
+
+
+## Example: NHANES
+### Piping
+
+\centering 
+\includegraphics[height=2in]{Figures/pipe_logo.png}
+
+## Example: NHANES
+### Piping
+
+`%>%` is the pipe "operator". It takes what is on the left hand side and puts it in the right hand side's function.
+
+```{r, eval=FALSE}
+dem_df %>% summary
+```
+
+So the above code takes the data frame `df` and puts it into the `summary` function. This does the same thing as `summary(dem_df)`. 
+
+In this simple case, it doesn't really make the code more readable, but in more complex situations it can really help.
+
+## Example: NHANES
+### Select and Filter
+
+\centering 
+\includegraphics[height=2in]{Figures/dplyr_logo.png}
+
+
+## Example: NHANES
+### Select and Filter
+
+In situations where you want or need to subset your data, two main forms exist:
+
+1. Selecting Variables
+2. Filtering Rows
+
+The following slides show the base R way and the tidyverse way of subsetting.
+
+## Example: NHANES
+
+**Selecting Variables**
+```{r, eval=FALSE}
+df[, c("var1", "var2", etc.)]
+df %>%
+  select(var1, var2, etc.)
+```
+
+Here both do the same thing. The first, using `[`, is the "base R" way of selecting variables. The second, using the pipe, is the tidyverse way. Both work great so the choice is yours.
+
+## Example: NHANES
+
+**Filtering Rows**
+```{r, eval=FALSE}
+df[df$var1 == 1, ]
+df %>%
+  filter(var1 == 1)
+```
+
+Again, both do the same thing. The first, using `[`, is the "base R" way of filtering rows so that you only keep the ones where "var1" in `df` is equal to `1`. Again, the second is the tidyverse way. Whichever you like you should use.
+
+
+## Example: NHANES
+### Grouping and Summarizing
+
+A major aspect of analysis is comparing groups. Lucky for us, this is very simple in `R`. I call it the three step summary:
+
+1. Data
+2. Group by
+3. Summarize
+
+## Example: NHANES
+### Grouping and Summarizing
+
+```{r}
+dem_df$citizen <- factor(dem_df$dmdcitzn)
+dem_df %>%                           ## 1. Data
+  group_by(citizen) %>%              ## 2. Group by
+  summarize(N = n())                 ## 3. Summarize
+```
+
+## Example: NHANES
+### Grouping and Summarizing
+
+On the previous slide: 
+
+* The first column is the grouping variable and the second is the N (number of individuals) by group. 
+* We can quickly see that there are four levels, currently, to the citizen variable. 
+    * After some reading of the documentation we see that `1 = Citizen` and `2 = Not a Citizen`. 
+    * A value of `7` it turns out is a placeholder value for missing. 
+    * And finally we have an NA category. 
+        * It's unlikely that we want those to be included in any analyses, unless we are particularly interested in the missingness on this variable. 
+        * So let's do some simple cleaning to get this where we want it. To do this, we will use the `furniture` package.
+
+## Example: NHANES
+### Grouping and Summarizing
+
+```{r, eval=FALSE}
+install.packages("furniture")
+```
+
+```{r, message=FALSE, warning=FALSE}
+library(furniture)
+## Changes all 7's to NA's
+dem_df$citizen <- washer(dem_df$citizen, 7)         
+## Changes all 2's to 0's
+dem_df$citizen <- washer(dem_df$citizen, 2, value=0)
+```
+
+Now, our citizen variable is cleaned, with `0` meaning not a citizen and `1` meaning citizen. Let's rerun the code from above with the three step summary:
+
+## Example: NHANES
+### Grouping and Summarizing
+
+```{r}
+## Three step summary:
+dem_df %>%                           ## 1. Data
+  group_by(citizen) %>%              ## 2. Group by
+  summarize(N = n())                 ## 3. Summarize
+```
+
+Its clear that the majority of the subjects are citizens.
+
+## Example: NHANES
+### Grouping and Summarizing
+
+*Check multiple variables at the same time:*
+
+```{r}
+## Three step summary:
+dem_df %>%                           ## 1. Data
+  group_by(citizen) %>%              ## 2. Group by
+  summarize(N = n(),                 ## 3. Summarize
+            Age = mean(ridageyr, na.rm=TRUE))                 
+```
+
+## Example: NHANES
+### Grouping and Summarizing
+
+On previous slide:
+
+* The `n()` function gives us counts
+* The `mean()` function which, shockingly, gives us the mean. 
+    * Note that if there are `NA`'s in the variable, the mean (and most other functions like it) will give the result `NA`. 
+    * To have `R` ignore these, we tell the `mean` function to remove the `NA`'s when you compute this using `na.rm=TRUE`.
+
+
+## Example: NHANES
+
+\centering
+\textbf{The Grouping and Summarizing Steps}
+
+This pattern of grouping and summarizing is something that will follow us throughout the book. 
+
+It's a great way to get to know your data well and to make decisions on what to do next with your data.
+
+
+## Example: NHANES
+### Reshaping
+
+This is a big part of working with data. Unfortunately, it is also a difficult topic to understand without much practice at it. In general, two data formats exist:
+
+1. Wide form
+2. Long form
+
+Only when the data is cross-sectional and each individual is a row does this distinction not matter much. Otherwise, if there are multiple measures per individual, or there are multiple individuals per cluster, the distinction between wide and long is very important for modeling and visualization.
+
+
+## Example: NHANES
+### Wide Form
+
+Wide form generally has one unit (i.e. individual) per row. This generally looks like:
+
+```{r, echo=FALSE}
+data.frame("ID"=c(1:10), "Var_Time1"=rnorm(10), "Var_Time2"=runif(10))
+```
+
+Notice that each row has a unique ID. 
+
+This format is common in the ANOVA family of analyses. These can be used when there are set time points that the individual is measured and each individual has the same number of time points. This is not always reasonable, but when it is, wide format works just fine. However, when these conditions don't hold, mixed effects modeling (i.e. multilevel modeling, hierarchical linear modeling) is particularly useful. In order to do mixed effects modeling, long format is required.
+
+## Example: NHANES
+### Long Form
+
+In contrast, long format has the lowest nested unit as a single row. This means that a single ID can span multiple rows, usually with a unique time point for each row as so:
+
+```{r, echo=FALSE}
+data.frame("ID"=c(1,1,1,1,2,2,3,3,3), 
+           "Time"=c(1,2,3,4,1,2,1,2,3), 
+           "Var"=runif(9))
+```
+
+Notice that a single ID spans multiple columns and that each row has only one time point. Here, time is nested within individuals making it the lowest unit. Therefore, each row corresponds to a single time point. Generally, this is the format we want for most modeling techniques and most visualizations.
+
+## Example: NHANES
+### Joining (merging)
+
+*The final topic in the chapter is joining data sets.*
+
+We currently have 4 data sets that have mostly the same people in them but with different variables. One tells us about the demographics; another gives us information on mental health. We may have questions that ask whether a demographic characteristics is related to a mental health factor. This means we need to merge, or join, our data sets.[^bind]
+
+[^bind]: Note that this is different than adding new rows but not new variables. Merging requires that we have at least some overlap of individuals in both data sets.
+
+## Example: NHANES
+### Joining (merging)
+
+When we merge a data set, we combine them based on some ID variable(s). Here, this is simple since each individual is given a unique identifier in the variable `seqn`. Within the `dplyr` package there are four main joining functions: `inner_join`, `left_join`, `right_join` and `full_join`. Each join combines the data in slightly different ways. 
+
+## Example: NHANES
+### Joining (merging)
+
+Let's first load `dplyr`:
+```{r}
+library(dplyr)
+```
+
+## Example: NHANES
+### Joining (merging)
+#### Inner Join
+
+Here, only those individuals that are in both data sets that you are combining will remain. So if person "A" is in data set 1 and not in data set 2 then he/she will not be included.
+
+```{r, eval=FALSE}
+inner_join(df1, df2, by="IDvariable")
+```
+
+## Example: NHANES
+### Joining (merging)
+#### Left or Right Join
+
+This is similar to inner join but now if the individual is in data set 1 then `left_join` will keep them even if they aren't in data set 2. `right_join` means if they are in data set 2 then they will be kept whether or not they are in data set 1.
+
+```{r, eval=FALSE}
+left_join(df1, df2, by="IDvariable")   ## keeps all in df1
+right_join(df1, df2, by="IDvariable")  ## keeps all in df2
+```
+
+## Example: NHANES
+### Joining (merging)
+#### Full Join
+
+This one simply keeps all individuals that are in either data set 1 or data set 2. 
+
+```{r, eval=FALSE}
+full_join(df1, df2, by="IDvariable")
+```
+
+Each of the left, right and full joins will have missing values placed in the variables where that individual wasn't found. For example, if person "A" was not in df2, then in a full join they would have missing values in the df1 variables.
+
+## Example: NHANES
+
+For our NHANES example, we will use `full_join` to get all the data sets together. Note that in the code below we do all the joining in the same overall step. 
+
+```{r}
+df <- dem_df %>%
+  full_join(med_df, by="seqn") %>%
+  full_join(men_df, by="seqn") %>%
+  full_join(act_df, by="seqn")
+```
+
+So now `df` is the the joined data set of all four. We started with `dem_df` joined it with `med_df` by `seqn` then joined that joined data set with `men_df` by `seqn`, and so on.
+
+# Conclusions
+
+## In This Chapter:
+* You have learned how to manipulate your data in several ways:
+    * Summarizing
+    * Reshaping
+    * Joining
+
+*For analyses in the next chapter, we will use this new* `df` *object that we concluded with.*
+
+Also, you'll see that many of these methods apply to more than just manipulating data. As you learn one method, you'll begin to see how easily you can use it in other situations.
+
+-----
+
+\centerline{\includegraphics[height=4in]{Figures/delicate_arch.jpg}}
