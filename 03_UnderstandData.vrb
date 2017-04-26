@@ -1,0 +1,21 @@
+\frametitle{A final example}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{theme\_bw()} makes the background white,
+\item
+  the \texttt{scale\_color\_manual()} allows us to change the colors in
+  the plot.
+\end{itemize}
+
+You can get a good idea of how many types of plots you can do by going
+to
+\href{http://docs.ggplot2.org/current/}{http://docs.ggplot2.org/current}.
+
+Almost any informative plot that you need to do as a researcher is
+possible with \texttt{ggplot2}.
+
+We will be using \texttt{ggplot2} extensively in the class to help
+understand our data and our models as well as communicate our results.
+

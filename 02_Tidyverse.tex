@@ -1,114 +1,3 @@
-\documentclass[ignorenonframetext,]{beamer}
-\setbeamertemplate{caption}[numbered]
-\setbeamertemplate{caption label separator}{: }
-\setbeamercolor{caption name}{fg=normal text.fg}
-\beamertemplatenavigationsymbolsempty
-\usepackage{lmodern}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-\ifxetex
-\usepackage{mathspec}
-\else
-\usepackage{fontspec}
-\fi
-\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
-\fi
-\usetheme{metropolis}
-% use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
-\newif\ifbibliography
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
-\newcommand{\ImportTok}[1]{{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
-\newcommand{\BuiltInTok}[1]{{#1}}
-\newcommand{\ExtensionTok}[1]{{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
-\newcommand{\RegionMarkerTok}[1]{{#1}}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
-\newcommand{\NormalTok}[1]{{#1}}
-
-% Prevent slide breaks in the middle of a paragraph:
-\widowpenalties 1 10000
-\raggedbottom
-
-\AtBeginPart{
-\let\insertpartnumber\relax
-\let\partname\relax
-\frame{\partpage}
-}
-\AtBeginSection{
-\ifbibliography
-\else
-\let\insertsectionnumber\relax
-\let\sectionname\relax
-\frame{\sectionpage}
-\fi
-}
-\AtBeginSubsection{
-\let\insertsubsectionnumber\relax
-\let\subsectionname\relax
-\frame{\subsectionpage}
-}
-
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{0}
-
-\title{Chapter 2: Manipulating Your Data}
-\author{Tyson S. Barrett}
-\date{Summer 2017}
-
-\begin{document}
-\frame{\titlepage}
-
-\begin{frame}
-\tableofcontents[hideallsubsections]
-\end{frame}
-
 \section{Introduction}\label{introduction}
 
 \begin{frame}{The Newest and Brightest}
@@ -204,7 +93,7 @@ same things for you). We can do this by:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{awesome::}\KeywordTok{make_really_great}\NormalTok{(arg)}
+\NormalTok{awesome}\OperatorTok{::}\KeywordTok{make_really_great}\NormalTok{(arg)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -363,7 +252,7 @@ on the left hand side and puts it in the right hand side's function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dem_df %>%}\StringTok{ }\NormalTok{summary}
+\NormalTok{dem_df }\OperatorTok{%>%}\StringTok{ }\NormalTok{summary}
 \end{Highlighting}
 \end{Shaded}
 
@@ -418,7 +307,7 @@ subsetting.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{df[, }\KeywordTok{c}\NormalTok{(}\StringTok{"var1"}\NormalTok{, }\StringTok{"var2"}\NormalTok{, etc.)]}
-\NormalTok{df %>%}
+\NormalTok{df }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{select}\NormalTok{(var1, var2, etc.)}
 \end{Highlighting}
 \end{Shaded}
@@ -435,9 +324,9 @@ the tidyverse way. Both work great so the choice is yours.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{df[df$var1 ==}\StringTok{ }\DecValTok{1}\NormalTok{, ]}
-\NormalTok{df %>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(var1 ==}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\NormalTok{df[df}\OperatorTok{$}\NormalTok{var1 }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{, ]}
+\NormalTok{df }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(var1 }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -476,9 +365,9 @@ very simple in \texttt{R}. I call it the three step summary:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dem_df$citizen <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(dem_df$dmdcitzn)}
-\NormalTok{dem_df %>%}\StringTok{                           }\NormalTok{## 1. Data}
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(citizen) %>%}\StringTok{              }\NormalTok{## 2. Group by}
+\NormalTok{dem_df}\OperatorTok{$}\NormalTok{citizen <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(dem_df}\OperatorTok{$}\NormalTok{dmdcitzn)}
+\NormalTok{dem_df }\OperatorTok{%>%}\StringTok{                           }\NormalTok{## 1. Data}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(citizen) }\OperatorTok{%>%}\StringTok{              }\NormalTok{## 2. Group by}
 \StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{N =} \KeywordTok{n}\NormalTok{())                 ## 3. Summarize}
 \end{Highlighting}
 \end{Shaded}
@@ -554,9 +443,9 @@ On the previous slide:
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(furniture)}
 \NormalTok{## Changes all 7's to NA's}
-\NormalTok{dem_df$citizen <-}\StringTok{ }\KeywordTok{washer}\NormalTok{(dem_df$citizen, }\DecValTok{7}\NormalTok{)         }
+\NormalTok{dem_df}\OperatorTok{$}\NormalTok{citizen <-}\StringTok{ }\KeywordTok{washer}\NormalTok{(dem_df}\OperatorTok{$}\NormalTok{citizen, }\DecValTok{7}\NormalTok{)         }
 \NormalTok{## Changes all 2's to 0's}
-\NormalTok{dem_df$citizen <-}\StringTok{ }\KeywordTok{washer}\NormalTok{(dem_df$citizen, }\DecValTok{2}\NormalTok{, }\DataTypeTok{value=}\DecValTok{0}\NormalTok{)}
+\NormalTok{dem_df}\OperatorTok{$}\NormalTok{citizen <-}\StringTok{ }\KeywordTok{washer}\NormalTok{(dem_df}\OperatorTok{$}\NormalTok{citizen, }\DecValTok{2}\NormalTok{, }\DataTypeTok{value=}\DecValTok{0}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -575,8 +464,8 @@ with the three step summary:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{## Three step summary:}
-\NormalTok{dem_df %>%}\StringTok{                           }\NormalTok{## 1. Data}
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(citizen) %>%}\StringTok{              }\NormalTok{## 2. Group by}
+\NormalTok{dem_df }\OperatorTok{%>%}\StringTok{                           }\NormalTok{## 1. Data}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(citizen) }\OperatorTok{%>%}\StringTok{              }\NormalTok{## 2. Group by}
 \StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{N =} \KeywordTok{n}\NormalTok{())                 ## 3. Summarize}
 \end{Highlighting}
 \end{Shaded}
@@ -605,8 +494,8 @@ Its clear that the majority of the subjects are citizens.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{## Three step summary:}
-\NormalTok{dem_df %>%}\StringTok{                           }\NormalTok{## 1. Data}
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(citizen) %>%}\StringTok{              }\NormalTok{## 2. Group by}
+\NormalTok{dem_df }\OperatorTok{%>%}\StringTok{                           }\NormalTok{## 1. Data}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(citizen) }\OperatorTok{%>%}\StringTok{              }\NormalTok{## 2. Group by}
 \StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{N =} \KeywordTok{n}\NormalTok{(),                 ## 3. Summarize}
             \DataTypeTok{Age =} \KeywordTok{mean}\NormalTok{(ridageyr, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{))                 }
 \end{Highlighting}
@@ -702,17 +591,17 @@ Wide form generally has one unit (i.e.~individual) per row. This
 generally looks like:
 
 \begin{verbatim}
-   ID  Var_Time1 Var_Time2
-1   1  0.4176037 0.9602761
-2   2  0.7149929 0.5461098
-3   3  0.7999565 0.9237952
-4   4 -0.6939934 0.4098576
-5   5 -1.4940423 0.9946778
-6   6  1.9267254 0.4752230
-7   7 -0.5157514 0.6510159
-8   8 -1.3018363 0.9891306
-9   9  0.4916932 0.6533781
-10 10  0.9109289 0.9238842
+   ID  Var_Time1   Var_Time2
+1   1 -0.7270647 0.788377285
+2   2  1.3440319 0.713688729
+3   3  0.1549105 0.701246663
+4   4  1.5815837 0.312052993
+5   5  0.9450554 0.908095781
+6   6 -0.2108655 0.588288029
+7   7 -0.5349260 0.080824876
+8   8 -0.9870937 0.517357863
+9   9  0.9765598 0.002205511
+10 10  2.3975643 0.357604564
 \end{verbatim}
 
 Notice that each row has a unique ID.
@@ -738,16 +627,16 @@ This means that a single ID can span multiple rows, usually with a
 unique time point for each row as so:
 
 \begin{verbatim}
-  ID Time       Var
-1  1    1 0.2463071
-2  1    2 0.5801360
-3  1    3 0.8017131
-4  1    4 0.2471068
-5  2    1 0.5347363
-6  2    2 0.6341020
-7  3    1 0.4492248
-8  3    2 0.3617016
-9  3    3 0.5144749
+  ID Time         Var
+1  1    1 0.992901128
+2  1    2 0.006321579
+3  1    3 0.802494166
+4  1    4 0.058698931
+5  2    1 0.415603180
+6  2    2 0.441231131
+7  3    1 0.265055374
+8  3    2 0.452102334
+9  3    3 0.223347988
 \end{verbatim}
 
 Notice that a single ID spans multiple columns and that each row has
@@ -890,9 +779,9 @@ the same overall step.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{df <-}\StringTok{ }\NormalTok{dem_df %>%}
-\StringTok{  }\KeywordTok{full_join}\NormalTok{(med_df, }\DataTypeTok{by=}\StringTok{"seqn"}\NormalTok{) %>%}
-\StringTok{  }\KeywordTok{full_join}\NormalTok{(men_df, }\DataTypeTok{by=}\StringTok{"seqn"}\NormalTok{) %>%}
+\NormalTok{df <-}\StringTok{ }\NormalTok{dem_df }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{full_join}\NormalTok{(med_df, }\DataTypeTok{by=}\StringTok{"seqn"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{full_join}\NormalTok{(men_df, }\DataTypeTok{by=}\StringTok{"seqn"}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{full_join}\NormalTok{(act_df, }\DataTypeTok{by=}\StringTok{"seqn"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -924,8 +813,8 @@ and so on.
   \end{itemize}
 \end{itemize}
 
-\emph{For analyses in the next chapter, we will use this new}
-\texttt{df} \emph{object that we concluded with.}
+\emph{For analyses in the later chapters, we will use this new}
+\texttt{df} \emph{object that we concluded with containing NHANES data.}
 
 Also, you'll see that many of these methods apply to more than just
 manipulating data. As you learn one method, you'll begin to see how
@@ -938,5 +827,3 @@ easily you can use it in other situations.
 \centerline{\includegraphics[height=4in]{Figures/delicate_arch.jpg}}
 
 \end{frame}
-
-\end{document}

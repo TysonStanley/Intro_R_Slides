@@ -1,0 +1,560 @@
+\documentclass[10pt,ignorenonframetext,]{beamer}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+\ifxetex
+\usepackage{mathspec}
+\else
+\usepackage{fontspec}
+\fi
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+\usetheme{metropolis}
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\newif\ifbibliography
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight0.8\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+
+\AtBeginPart{
+\let\insertpartnumber\relax
+\let\partname\relax
+\frame{\partpage}
+}
+\AtBeginSection{
+\ifbibliography
+\else
+\let\insertsectionnumber\relax
+\let\sectionname\relax
+\frame{\sectionpage}
+\fi
+}
+\AtBeginSubsection{
+\let\insertsubsectionnumber\relax
+\let\subsectionname\relax
+\frame{\subsectionpage}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+\title{Chapter 3: Understanding and Describing Your Data}
+\author{Tyson S. Barrett}
+\institute{Utah State University}
+\date{Summer 2017}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}
+\tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Introduction}\label{introduction}
+
+\begin{frame}{Understanding and Describing Your Data}
+
+We are going to take what we've learned from the previous two chapters
+and use them together to have simple but powerful ways to understand
+your data. This chapter will be broken down into:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Descriptive Statistics
+\item
+  Visualizations
+\end{enumerate}
+
+The two go hand-in-hand in understanding what is happening in your data.
+
+\end{frame}
+
+\begin{frame}{Exploring Data}
+
+We are often most interested in three things when exploring our data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{understanding distributions},
+\item
+  \textbf{understanding relationships}, and
+\item
+  \textbf{looking for outliers or errors}.
+\end{enumerate}
+
+\end{frame}
+
+\section{Descriptive Statistics}\label{descriptive-statistics}
+
+\begin{frame}[fragile]{Descriptive Statistics}
+
+Several methods of discovering descriptives in a succinct way have been
+developed for \texttt{R}.
+
+\begin{itemize}
+\tightlist
+\item
+  My favorite (full disclosure: it is one that I made so I may be
+  biased) is the \texttt{table1} function in the \texttt{furniture}
+  package.
+\item
+  It has been designed to be simple and complete.
+\item
+  It produces a well-formatted table that you can easily export and use
+  as a table in a report or article.\footnote<.->{It is called
+    ``table1'' because a nice descriptive table is often found in the
+    first table of many academic papers.}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Table 1}
+
+We'll first create a ficticious data set and we'll show the basic build
+of \texttt{table1}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(furniture)}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"A"}\NormalTok{=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{,}\OtherTok{NA}\NormalTok{),}
+                 \StringTok{"B"}\NormalTok{=}\KeywordTok{c}\NormalTok{(}\FloatTok{1.4}\NormalTok{,}\FloatTok{2.1}\NormalTok{,}\FloatTok{4.6}\NormalTok{,}\FloatTok{2.0}\NormalTok{,}\OtherTok{NA}\NormalTok{,}\FloatTok{3.4}\NormalTok{),}
+                 \StringTok{"C"}\NormalTok{=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+                 \StringTok{"D"}\NormalTok{=}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{6}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Table 1}
+
+This can quickly give you means and standard deviations (or counts and
+percentages for categorical variables).
+
+``A'' and ``C'' are supposed to be factors in this fake data set.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df$A <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(df$A, }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"cat1"}\NormalTok{, }\StringTok{"cat2"}\NormalTok{, }\StringTok{"cat3"}\NormalTok{, }\StringTok{"cat4"}\NormalTok{))}
+\NormalTok{df$C <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(df$C, }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"male"}\NormalTok{, }\StringTok{"female"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Table 1}
+
+Then we can use \texttt{table1()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table1}\NormalTok{(df, A, B, C, D)}
+\end{Highlighting}
+\end{Shaded}
+
+\tiny
+\begin{verbatim}
+|==============================|
+              Mean/Count (SD/%)
+ Observations 6                
+ A                             
+    cat1      2 (40%)          
+    cat2      1 (20%)          
+    cat3      1 (20%)          
+    cat4      1 (20%)          
+ B                             
+              2.70 (1.29)      
+ C                             
+    male      2 (33.3%)        
+    female    4 (66.7%)        
+ D                             
+              -0.04 (0.46)     
+|==============================|
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Table 1}
+
+So now we see the counts and percentages for the factor variables. But
+now we can take a step further and look for relationships. The code
+below shows the means/standard devaitions or counts/percentages by a
+grouping variable--in this case, \texttt{C}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table1}\NormalTok{(df, A, B, D,}
+       \DataTypeTok{splitby =} \NormalTok{~C)}
+\end{Highlighting}
+\end{Shaded}
+
+\tiny
+\begin{verbatim}
+|=====================================|
+              male         female     
+ Observations 2            4          
+ A                                    
+    cat1      1 (50%)      1 (33.3%)  
+    cat2      1 (50%)      0 (0%)     
+    cat3      0 (0%)       1 (33.3%)  
+    cat4      0 (0%)       1 (33.3%)  
+ B                                    
+              1.75 (0.49)  3.33 (1.30)
+ D                                    
+              -0.29 (0.01) 0.08 (0.53)
+|=====================================|
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Table 1}
+
+We can also test for differences by group as well (although this is not
+particularly good with a sample size of 5). It produces a warning since
+the \(\chi^2\) approximation is not accurate with cells this small.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table1}\NormalTok{(df, A, B, D,}
+       \DataTypeTok{splitby =} \NormalTok{~C,}
+       \DataTypeTok{test=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\tiny
+\begin{verbatim}
+|=============================================|
+              male         female      P-Value
+ Observations 2            4                  
+ A                                     0.405  
+    cat1      1 (50%)      1 (33.3%)          
+    cat2      1 (50%)      0 (0%)             
+    cat3      0 (0%)       1 (33.3%)          
+    cat4      0 (0%)       1 (33.3%)          
+ B                                     0.162  
+              1.75 (0.49)  3.33 (1.30)        
+ D                                     0.262  
+              -0.29 (0.01) 0.08 (0.53)        
+|=============================================|
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Table 1}
+
+Finally, we can play around with the formatting a bit to match what we
+need:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table1}\NormalTok{(df, A, B, D,}
+       \DataTypeTok{splitby =} \NormalTok{~C,}
+       \DataTypeTok{test=}\OtherTok{TRUE}\NormalTok{,}
+       \DataTypeTok{simple =} \OtherTok{TRUE}\NormalTok{,}
+       \DataTypeTok{condense =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\tiny
+\begin{verbatim}
+|=============================================|
+              male         female      P-Value
+ Observations 2            4                  
+ A                                     0.405  
+    cat1      50%          33.3%              
+    cat2      50%          0%                 
+    cat3      0%           33.3%              
+    cat4      0%           33.3%              
+ B            1.75 (0.49)  3.33 (1.30) 0.162  
+ D            -0.29 (0.01) 0.08 (0.53) 0.262  
+|=============================================|
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Table 1}
+
+So with three or four short lines of code we can get a good idea about
+variables that may be related to the grouping variable and any
+missingness in the factor variables. There's much more you can do with
+\texttt{table1} and there are vignettes and tutorials available to learn
+more.\footnote<.->{\url{tysonstanley.github.io}}
+
+\end{frame}
+
+\begin{frame}[fragile]{Other Descriptive Functions}
+
+Other quick descriptive functions exist; here are a few of them.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(df)          ## descriptives for each variable in the data}
+
+\KeywordTok{library}\NormalTok{(psych)       ## install first}
+\KeywordTok{describe}\NormalTok{(df)         ## produces summary statistics for continuous variables}
+
+\KeywordTok{library}\NormalTok{(Hmisc)       ## install first}
+\NormalTok{Hmisc::}\KeywordTok{describe}\NormalTok{(df)  ## gives summary for each variable separately}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\section{Visualizations}\label{visualizations}
+
+\begin{frame}{Visualizations}
+
+Understanding your data, in my experience, generally requires
+visualizations.
+
+Can help us:
+
+\begin{itemize}
+\tightlist
+\item
+  understand the distributions and relationships
+\item
+  catch errors in the data
+\item
+  find any outliers that could be highly influencing any models
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{ggplot2}}
+
+For simple but appealing visualizations we are going to be using
+\texttt{ggplot2}.
+
+\begin{quote}
+This package is used to produce professional level plots for many
+journalism organizations (e.g.~five-thrity-eight). These plots are
+quickly presentation quality and can be used to impress your boss, your
+advisor, or your friends.
+\end{quote}
+
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{ggplot2}}
+
+This package has a straight-forward syntax. It is built by adding layers
+to the plot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)   ## first install using install.packages("ggplot2")}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{ggplot2}}
+
+First, we have a nice \texttt{qplot} function that provides us a ``quick
+plot.'' It quickly decides what kind of plot is useful given the data
+and variables you provide.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{qplot}\NormalTok{(df$A)  ## Makes a simple histogram}
+\end{Highlighting}
+\end{Shaded}
+
+\centerline{\includegraphics[height=2in]{03_UnderstandData_files/figure-beamer/unnamed-chunk-9-1.pdf}}
+
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{ggplot2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{qplot}\NormalTok{(df$D, df$B)  ## Makes a scatterplot}
+\end{Highlighting}
+\end{Shaded}
+
+\centerline{\includegraphics[height=2in]{03_UnderstandData_files/figure-beamer/unnamed-chunk-10-1.pdf}}
+
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{ggplot2}}
+
+For a bit more control over the plot, you can use the \texttt{ggplot}
+function. The first piece is the \texttt{ggplot} piece. From there, we
+add layers. These layers generally start with \texttt{geom\_} then have
+the type of plot.
+
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{ggplot2}}
+
+Below, we start with telling \texttt{ggplot} the basics of the plot and
+then build a boxplot. The x-axis is the variable ``C'' and the y-axis is
+the variable ``D'' and then we color it by variable ``C'' as well.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{C, }\DataTypeTok{y=}\NormalTok{D)) +}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =} \NormalTok{C))}
+\end{Highlighting}
+\end{Shaded}
+
+\centerline{\includegraphics[height=2in]{03_UnderstandData_files/figure-beamer/unnamed-chunk-11-1.pdf}}
+
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{ggplot2}}
+
+Here are a few more examples:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{C)) +}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat=}\StringTok{"count"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =} \NormalTok{C))}
+\end{Highlighting}
+\end{Shaded}
+
+\centerline{\includegraphics[height=2in]{03_UnderstandData_files/figure-beamer/unnamed-chunk-12-1.pdf}}
+
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{ggplot2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{B, }\DataTypeTok{y=}\NormalTok{D)) +}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =} \NormalTok{C))}
+\end{Highlighting}
+\end{Shaded}
+
+\centerline{\includegraphics[height=2in]{03_UnderstandData_files/figure-beamer/unnamed-chunk-13-1.pdf}}
+\emph{Note that the warning that says it removed a row is because we had
+a missing value in ``C''.}
+
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{ggplot2}}
+
+We are going to make the first one again but with some aesthetic
+adjustments. Notice that we just added two extra lines telling
+\texttt{ggplot2} how we want some things to look.\footnote<.->{This is
+  just scratching the surface of what we can change in the plots.}
+
+\end{frame}
+
+\begin{frame}[fragile]{A final example}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{C, }\DataTypeTok{y=}\NormalTok{D)) +}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =} \NormalTok{C)) +}
+\StringTok{  }\KeywordTok{theme_bw}\NormalTok{() +}
+\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{"dodgerblue4"}\NormalTok{, }\StringTok{"coral2"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\centerline{\includegraphics[height=2in]{03_UnderstandData_files/figure-beamer/unnamed-chunk-14-1.pdf}}
+
+\end{frame}
+
+\begin{frame}[fragile]{A final example}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{theme\_bw()} makes the background white,
+\item
+  the \texttt{scale\_color\_manual()} allows us to change the colors in
+  the plot.
+\end{itemize}
+
+You can get a good idea of how many types of plots you can do by going
+to
+\href{http://docs.ggplot2.org/current/}{http://docs.ggplot2.org/current}.
+
+Almost any informative plot that you need to do as a researcher is
+possible with \texttt{ggplot2}.
+
+We will be using \texttt{ggplot2} extensively in the class to help
+understand our data and our models as well as communicate our results.
+
+\end{frame}
+
+\begin{frame}
+
+\centerline{\includegraphics[height=7in]{Figures/grass_landscape_arch.jpg}}
+
+\end{frame}
+
+\end{document}

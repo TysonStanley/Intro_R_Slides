@@ -1,0 +1,210 @@
+---
+title: "Chapter 4: Basic Analyses"
+author: "Tyson S. Barrett"
+date: "Summer 2017"
+institute: "Utah State University"
+fontsize: 10pt
+output:
+  beamer_presentation:
+    theme: "metropolis"
+    toc: true
+    fig_width: 5
+    fig_height: 4
+    fig_caption: true
+    df_print: default
+    keep_tex: true
+    incremental: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment="")
+```
+
+# Introduction
+
+## Basic Analyses
+
+\center
+\textbf{Basic Analyses}: The analyses taught in the first stats course
+\vspace{12pt}
+
+\columnsbegin
+\begin{column}{0.48\textwidth}
+   These include:
+   \begin{enumerate}
+   \item T-tests
+   \item ANOVA
+   \item Linear Regression
+   \end{enumerate}
+   These allow us to assess relationships like that in the figure.
+\end{column}
+\begin{column}{0.48\textwidth}
+    \begin{center}
+     \includegraphics[width=\textwidth]{Figures/FigureInteraction.jpg}
+     \end{center}
+\end{column}
+\columnsend
+
+\vspace{12pt}
+Maybe surprising:\\ These all are doing essentially the same thing!
+
+First, \textbf{T-TESTS!}
+
+# T-tests
+
+## Three Types
+
+\Huge
+\begin{enumerate}
+\item Simple
+\item Independent Samples
+\item Paired Samples
+\end{enumerate}
+
+## Three Types
+
+\Large
+Each will be demonstrated using:
+
+\normalsize
+```{r}
+df <- data.frame("A"=sample(c(0,1), 100, replace = TRUE),
+                 "B"=rnorm(100),
+                 "C"=rnorm(100))
+df
+```
+
+## Simple
+
+\center
+Comparing a mean of a variable with $\mu$.
+```{r}
+t.test(df$B, mu = 0)
+```
+
+## Independent Samples
+
+\center
+Comparing the means of two groups (`dfA` is the grouping variable).
+```{r}
+t.test(df$B ~ df$A)
+```
+
+
+## Paired Samples
+
+\center
+Comparing repeated measures (e.g., Pretest vs. Posttest).
+```{r}
+t.test(df$B, df$C, paired = TRUE)
+```
+
+## Testing Assumptions of T-Tests
+
+T-tests require that the data be normally distributed with approximately the same variance. 
+```{r, fig.width=5, height=2}
+## Normality
+par(mfrow = c(1,2))
+hist(df$B)
+qqnorm(df$B)
+abline(a=0, b=1)
+
+## Variance
+var(df$B)
+var(df$C)
+```
+
+# ANOVA
+
+## Analysis of Variance
+
+The Analysis of Variance (ANOVA) is highly related to t-tests but can handle 2+ groups.
+
+1. Provides the same p-value as t-tests
+2. $t^2$ = $F$
+
+For example:
+```{r}
+fit_ano = aov(df$B ~ df$A)
+summary(fit_ano)
+t.test(df$B ~ df$A)$p.value
+```
+
+## Analysis of Variance
+
+```{r, eval=FALSE}
+fit_ano = aov(df$B ~ df$A)
+summary(fit_ano)
+t.test(df$B ~ df$A)$p.value
+```
+
+Notice in the code:
+
+- We assigned the `aov()` the name `fit_ano` (which we could have called anything)
+- We used the `summary()` function to see the F and p values.
+- We pulled the p-value right out of the `t.test()` function.
+
+
+## Types
+
+\huge
+\begin{enumerate}
+\item One-Way
+\item Two-Way (Factorial)
+\item Repeated Measures
+\item A combination of Factorial and Repeated Measures
+\end{enumerate}
+
+## Types
+
+We will use the following data set for the examples:
+```{r}
+df <- data.frame("A"=sample(c(0,1), 100, replace = TRUE),
+                 "B"=rnorm(100),
+                 "C"=rnorm(100),
+                 "D"=sample(c(1:4), 100, replace = TRUE))
+df
+```
+
+## One-Way
+
+A One-Way ANOVA can be run using `aov()`.
+```{r}
+fit1 = aov(B ~ D, data = df)
+summary(fit1)
+```
+
+
+## Two-Way
+
+A Two-Way ANOVA uses essentially the exact same code with a minor change---including the other variable in an interaction.
+
+```{r}
+fit2 = aov(B ~ D * A, data = df)
+summary(fit2)
+```
+
+The `D:A` line highlights the interaction term whereas the others show the main effects.
+
+## Repeated Measures
+
+
+
+## Combination
+
+
+
+## Checking Assumptions
+
+
+
+
+
+# Linear Regression
+
+
+
+
+-----
+
+\centerline{\includegraphics[height=7in]{Figures/grass_landscape_arch.jpg}}

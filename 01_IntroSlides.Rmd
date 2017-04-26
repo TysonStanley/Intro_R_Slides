@@ -2,6 +2,7 @@
 title: "Chapter 1: The Basics"
 author: "Tyson S. Barrett"
 date: "Summer 2017"
+institute: "Utah State University"
 output:
   beamer_presentation:
     theme: "metropolis"
@@ -28,6 +29,10 @@ knitr::opts_chunk$set(echo = TRUE, comment="")
 \vspace{6pt}
 \centering
 This class will use R and RStudio to show how R can make several aspects of your research simpler, more likely to be reproducible, and more replicable.
+
+## RStudio
+
+\centerline{\includegraphics[height=2.75in]{Figures/FourPanes.png}}
 
 
 

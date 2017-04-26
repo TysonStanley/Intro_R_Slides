@@ -2,6 +2,7 @@
 title: "Chapter 2: Manipulating Your Data"
 author: "Tyson S. Barrett"
 date: "Summer 2017"
+institute: "Utah State University"
 output:
   beamer_presentation:
     theme: "metropolis"
@@ -406,7 +407,7 @@ So now `df` is the the joined data set of all four. We started with `dem_df` joi
     * Reshaping
     * Joining
 
-*For analyses in the next chapter, we will use this new* `df` *object that we concluded with.*
+*For analyses in the later chapters, we will use this new* `df` *object that we concluded with containing NHANES data.*
 
 Also, you'll see that many of these methods apply to more than just manipulating data. As you learn one method, you'll begin to see how easily you can use it in other situations.
 
