@@ -158,11 +158,12 @@ Notice in the code:
 ## Types
 
 We will use the following data set for the examples:
-```{r}
-df <- data.frame("A"=sample(c(0,1), 100, replace = TRUE),
+```{r, message=FALSE}
+library(tidyverse)
+df <- data.frame("A"=sample(c(0,1), 100, replace = TRUE) %>% factor,
                  "B"=rnorm(100),
                  "C"=rnorm(100),
-                 "D"=sample(c(1:4), 100, replace = TRUE))
+                 "D"=sample(c(1:4), 100, replace = TRUE) %>% factor)
 df
 ```
 
@@ -188,19 +189,123 @@ The `D:A` line highlights the interaction term whereas the others show the main 
 
 ## Repeated Measures
 
+\center
+To show this, we will add a fake `ID` variable to our already fake data set `df`.
+
+```{r}
+df$ID = 1:100
+```
+
+And change our data to long (Can you remember how to do it?)
+```{r, message=FALSE}
+library(tidyverse)
+df_long = gather(df, "var", "value", 2:3)
+df_long
+```
+
+
+## Repeated Measures
+
+\Large
+The repeated measures, besides using a long-form of the data, is very similar in code. In addition to our usual formula (e.g., `something ~ other + stuff`), we have the `Error()` function. This function tells `R` how the repeated measures are clustered. In general, you'll provide the subject ID.
+
+The next slide highlights this.
+
+
+## Repeated Measures
+\small
+```{r}
+fit3 = aov(value ~ var + Error(ID), data = df_long)
+summary(fit3)
+```
+
+\normalsize
+Here, `value` was the value of the repeated measures where `var` is the time. That means our oucome is testing if there were any differences from pre-test to post-test across all the groups.
 
 
 ## Combination
 
+To take the repeated measures a step further, we can do a Three-Way Repeated Measures ANOVA.
+
+```{r, eval=F}
+fit4 = aov(value ~ var * D * A + Error(ID), data = df_long)
+summary(fit4)
+```
+
+\center
+\small
+The output is on the next slide...
+
+
+## Combination
+\small
+```{r, echo=FALSE}
+fit4 = aov(value ~ var * D * A + Error(ID), data = df_long)
+summary(fit4)
+```
 
 
 ## Checking Assumptions
 
+\center
+Of course, as with any statistical analysis, there are assumptions. 
 
+Many of these we can test.
 
+Using our `fitX` objects from our ANOVAs above, we can look at our assumptions:
+
+```{r, eval=FALSE}
+par(mfrow = c(2,2))
+plot(fit2)
+```
+
+\center
+\small
+Again, the output is on the next slide...
+
+## Checking Assumptions
+
+```{r, echo=FALSE}
+par(mfrow = c(2,2))
+plot(fit2)
+```
+
+## Checking Assumptions
+They don't fit great on the slides but trust me that normality looks good. The assumption of homogeneity of variance looks good as well.
+
+But, if you wanted to test it, you could.
+
+```{r, message=FALSE}
+library(car)
+leveneTest(fit2)
+```
+
+Large p-value here is a good thing: `emo::ji("smile")` \footnote{This shows a smiley in `R`, just not on these slides---from the `emo` package on GitHub.}
 
 
 # Linear Regression
+
+## Linear Regression
+\large
+Once again, linear regression is essentially the more flexible twin of ANOVA and t-tests.\footnote{It mainly only differs from ANOVA in the way it takes a dummy code rather than an effect code of the categorical variables.}
+
+It can:
+
+1. Handle continuous and categorical predictors (i.e., independent variables)
+2. Less stringent assumption of equality of variances
+3. Is what many other methods are built on (Chapter 5 and 6 will talk about some of these)
+
+
+
+## Linear Regression
+
+We will use `lm()` (Linear Model) to fit these models.
+
+\small
+```{r}
+fit5 = lm(B ~ A, data = df)
+summary(fit5)
+```
 
 
 
