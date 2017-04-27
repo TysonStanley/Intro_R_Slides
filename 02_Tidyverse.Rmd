@@ -87,7 +87,7 @@ There are several methods that help tidy up your data:
 
 To help illustrate each aspect, we are going to use real data from the National Health and Nutrition Examiniation Survey (NHANES). I've provided this data at [https://tysonstanley.github.io/assets/Data/NHANES.zip](https://tysonstanley.github.io/assets/Data/NHANES.zip). I've cleaned it up somewhat already.
 
-# Example
+# A Walk-Through
 ## Example: NHANES
 
 ### Import
@@ -330,6 +330,33 @@ data.frame("ID"=c(1,1,1,1,2,2,3,3,3),
 ```
 
 Notice that a single ID spans multiple columns and that each row has only one time point. Here, time is nested within individuals making it the lowest unit. Therefore, each row corresponds to a single time point. Generally, this is the format we want for most modeling techniques and most visualizations.
+
+## Quick Sidetrack from NHANES: Reshaping
+### Wide to Long
+
+With a fake data set, we'll go from wide to long...
+```{r}
+df_wide <- data.frame("ID"=c(1:10), 
+                      "Var_Time1"=rnorm(10), 
+                      "Var_Time2"=runif(10))
+df_long <- gather(df_wide, "var_label", "value", 2:3)
+```
+We provided the data, some variable names, and told it what columns contained the values.
+
+## Quick Sidetrack from NHANES: Reshaping
+### Long to Wide
+
+Now we will go from long to wide using `spread()` from the same package.
+```{r}
+df_long <- data.frame("ID"=c(1,1,1,1,2,2,3,3,3), 
+                      "Time"=c(1,2,3,4,1,2,1,2,3), 
+                      "Var"=runif(9))
+df_wide <- spread(df_long, Time, Var)
+```
+Here, we provided the column name (`Time`) that had the value labels and (`Var`) that contained the values themselves. 
+
+With a little bit of code we can move data around without any copy-pasting that is so error-prone.
+
 
 ## Example: NHANES
 ### Joining (merging)

@@ -255,7 +255,7 @@ Many of these we can test.
 Using our `fitX` objects from our ANOVAs above, we can look at our assumptions:
 
 ```{r, eval=FALSE}
-par(mfrow = c(2,2))
+par(mfrow = c(2,2))  ## puts the four plots on a 2 x 2 grid
 plot(fit2)
 ```
 
@@ -307,6 +307,138 @@ fit5 = lm(B ~ A, data = df)
 summary(fit5)
 ```
 
+## Linear Regression
+
+We can add an interaction with the `*`.
+\small
+```{r}
+fit6 = lm(B ~ A*D, data = df)
+summary(fit6)
+```
+
+
+## Other Specifications
+
+We can also make adjustments to the variables within the model. 
+
+First, we can transform the variables (e.g., log transformation).
+```{r, message=FALSE, eval=FALSE}
+fit7 = lm(log(B) ~ A*D, data = df)
+summary(fit7)
+```
+
+We can change the reference level of a variable, too.
+```{r, message=FALSE, eval=FALSE}
+fit8 = lm(B ~ relevel(D,ref = "4"), data = df)
+summary(fit8)
+```
+
+
+## Checking Assumptions
+
+Assumption checking is similar to that of the linear model.
+```{r}
+par(mfrow = c(2,2))
+plot(fit5)
+```
+
+
+# Reporting Results
+## Making This into a Table
+
+\Large
+Often we want to present this information in a table. This can be done is several ways:
+
+1. Pulling information out of the model objects directly
+2. Using a package like `stargazer` to do that work for you
+3. Manually by hand
+
+We can certainly do number 3 but why? So we'll look at both 1 and 2.
+
+## Pull information out of the model objects
+
+The model objects contain loads of information that we can pull out:
+
+1. Coefficients
+2. Standard Errors and P-values
+3. Confidence Intervals
+4. Fit Statistics
+5. Predicted Values
+6. and more! [^kidding]
+
+[^kidding]: For a low cost of $49.99! Kidding...
+
+
+## Pull information out of the model objects
+
+To see what the model object holds:
+\small
+```{r}
+names(fit5)
+names(summary(fit5))
+```
+
+## Pull information out of the model objects
+
+\center
+Using that information we can grab:
+```{r}
+summary(fit5)$coefficients
+```
+or
+```{r}
+summary(fit5)$fstatistic
+```
+
+## Pull information out of the model objects
+
+Put it in a table:
+```{r}
+rbind(data.frame(summary(fit5)$coefficients, "Type"="Simple Regression"),
+      data.frame(summary(fit6)$coefficients, "Type"="Interaction"))
+```
+
+## Pull information out of the model objects
+
+\Large
+On the previous slide we:
+
+1. Created two `data.frame` with the coefficients and a variable called `"Type"`
+2. Glued them together by row with `rbind()`
+
+This is a simple way of putting a table together that you can later export.
+
+
+## Use a package like `stargazer` to do that work for you
+
+A simpler but less flexible way is using a package like `stargazer`.
+\tiny
+```{r, message=FALSE}
+library(stargazer)
+stargazer(fit5, fit6, type = "text")
+```
+
+## Use a package like `stargazer` to do that work for you
+
+This particular package can take several model objects and produce a nice table. It is hard to see but it includes the number of observations, fit statistics, the coefficients, and f-statistics.
+
+Other packages exist that do similar things (e.g., `texreg`).
+
+```{r, message=FALSE, eval=FALSE}
+library(texreg)
+screenreg(list(fit5, fit6))
+```
+
+
+# Conclusions
+## Conclusion
+
+\Large
+\begin{enumerate}
+\item Performing linear models is straightforward in `R`
+\item With a few lines of code, we can fit a model and check model assumptions
+\item We can easily turn our model information into an informative table
+\end{enumerate}
 
 
 

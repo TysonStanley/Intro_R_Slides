@@ -153,7 +153,7 @@ cleaned it up somewhat already.
 
 \end{frame}
 
-\section{Example}\label{example}
+\section{A Walk-Through}\label{a-walk-through}
 
 \begin{frame}[fragile]{Example: NHANES}
 
@@ -591,17 +591,17 @@ Wide form generally has one unit (i.e.~individual) per row. This
 generally looks like:
 
 \begin{verbatim}
-   ID  Var_Time1   Var_Time2
-1   1 -0.7270647 0.788377285
-2   2  1.3440319 0.713688729
-3   3  0.1549105 0.701246663
-4   4  1.5815837 0.312052993
-5   5  0.9450554 0.908095781
-6   6 -0.2108655 0.588288029
-7   7 -0.5349260 0.080824876
-8   8 -0.9870937 0.517357863
-9   9  0.9765598 0.002205511
-10 10  2.3975643 0.357604564
+   ID    Var_Time1  Var_Time2
+1   1  1.138688557 0.67206981
+2   2 -0.926541315 0.30853689
+3   3 -0.007108554 0.55613005
+4   4  0.533288410 0.23545637
+5   5 -0.909166260 0.01326606
+6   6  1.396866039 0.73015902
+7   7  1.748336183 0.66249056
+8   8  0.100194424 0.36643398
+9   9  0.511294922 0.08342045
+10 10 -0.585448865 0.56180077
 \end{verbatim}
 
 Notice that each row has a unique ID.
@@ -627,16 +627,16 @@ This means that a single ID can span multiple rows, usually with a
 unique time point for each row as so:
 
 \begin{verbatim}
-  ID Time         Var
-1  1    1 0.992901128
-2  1    2 0.006321579
-3  1    3 0.802494166
-4  1    4 0.058698931
-5  2    1 0.415603180
-6  2    2 0.441231131
-7  3    1 0.265055374
-8  3    2 0.452102334
-9  3    3 0.223347988
+  ID Time       Var
+1  1    1 0.4722128
+2  1    2 0.1303989
+3  1    3 0.7835221
+4  1    4 0.4007190
+5  2    1 0.1882725
+6  2    2 0.8000024
+7  3    1 0.7557883
+8  3    2 0.1840514
+9  3    3 0.9533038
 \end{verbatim}
 
 Notice that a single ID spans multiple columns and that each row has
@@ -644,6 +644,54 @@ only one time point. Here, time is nested within individuals making it
 the lowest unit. Therefore, each row corresponds to a single time point.
 Generally, this is the format we want for most modeling techniques and
 most visualizations.
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]{Quick Sidetrack from NHANES: Reshaping}
+
+\begin{block}{Wide to Long}
+
+With a fake data set, we'll go from wide to long\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df_wide <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"ID"}\NormalTok{=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{), }
+                      \StringTok{"Var_Time1"}\NormalTok{=}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{), }
+                      \StringTok{"Var_Time2"}\NormalTok{=}\KeywordTok{runif}\NormalTok{(}\DecValTok{10}\NormalTok{))}
+\NormalTok{df_long <-}\StringTok{ }\KeywordTok{gather}\NormalTok{(df_wide, }\StringTok{"var_label"}\NormalTok{, }\StringTok{"value"}\NormalTok{, }\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We provided the data, some variable names, and told it what columns
+contained the values.
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]{Quick Sidetrack from NHANES: Reshaping}
+
+\begin{block}{Long to Wide}
+
+Now we will go from long to wide using \texttt{spread()} from the same
+package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df_long <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"ID"}\NormalTok{=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{), }
+                      \StringTok{"Time"}\NormalTok{=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }
+                      \StringTok{"Var"}\NormalTok{=}\KeywordTok{runif}\NormalTok{(}\DecValTok{9}\NormalTok{))}
+\NormalTok{df_wide <-}\StringTok{ }\KeywordTok{spread}\NormalTok{(df_long, Time, Var)}
+\end{Highlighting}
+\end{Shaded}
+
+Here, we provided the column name (\texttt{Time}) that had the value
+labels and (\texttt{Var}) that contained the values themselves.
+
+With a little bit of code we can move data around without any
+copy-pasting that is so error-prone.
 
 \end{block}
 
