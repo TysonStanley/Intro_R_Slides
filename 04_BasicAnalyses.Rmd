@@ -8,8 +8,8 @@ output:
   beamer_presentation:
     theme: "metropolis"
     toc: true
-    fig_width: 5
-    fig_height: 4
+    fig_width: 4.5
+    fig_height: 3.5
     fig_caption: true
     df_print: default
     keep_tex: true

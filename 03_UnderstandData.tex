@@ -1,124 +1,3 @@
-\documentclass[10pt,ignorenonframetext,]{beamer}
-\setbeamertemplate{caption}[numbered]
-\setbeamertemplate{caption label separator}{: }
-\setbeamercolor{caption name}{fg=normal text.fg}
-\beamertemplatenavigationsymbolsempty
-\usepackage{lmodern}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-\ifxetex
-\usepackage{mathspec}
-\else
-\usepackage{fontspec}
-\fi
-\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
-\fi
-\usetheme{metropolis}
-% use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
-\newif\ifbibliography
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
-\newcommand{\ImportTok}[1]{{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
-\newcommand{\BuiltInTok}[1]{{#1}}
-\newcommand{\ExtensionTok}[1]{{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
-\newcommand{\RegionMarkerTok}[1]{{#1}}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
-\newcommand{\NormalTok}[1]{{#1}}
-\usepackage{graphicx,grffile}
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight0.8\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-
-% Prevent slide breaks in the middle of a paragraph:
-\widowpenalties 1 10000
-\raggedbottom
-
-\AtBeginPart{
-\let\insertpartnumber\relax
-\let\partname\relax
-\frame{\partpage}
-}
-\AtBeginSection{
-\ifbibliography
-\else
-\let\insertsectionnumber\relax
-\let\sectionname\relax
-\frame{\sectionpage}
-\fi
-}
-\AtBeginSubsection{
-\let\insertsubsectionnumber\relax
-\let\subsectionname\relax
-\frame{\subsectionpage}
-}
-
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{0}
-
-\title{Chapter 3: Understanding and Describing Your Data}
-\author{Tyson S. Barrett}
-\institute{Utah State University}
-\date{Summer 2017}
-
-\begin{document}
-\frame{\titlepage}
-
-\begin{frame}
-\tableofcontents[hideallsubsections]
-\end{frame}
-
 \section{Introduction}\label{introduction}
 
 \begin{frame}{Understanding and Describing Your Data}
@@ -207,8 +86,8 @@ percentages for categorical variables).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{df$A <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(df$A, }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"cat1"}\NormalTok{, }\StringTok{"cat2"}\NormalTok{, }\StringTok{"cat3"}\NormalTok{, }\StringTok{"cat4"}\NormalTok{))}
-\NormalTok{df$C <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(df$C, }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"male"}\NormalTok{, }\StringTok{"female"}\NormalTok{))}
+\NormalTok{df}\OperatorTok{$}\NormalTok{A <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(df}\OperatorTok{$}\NormalTok{A, }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"cat1"}\NormalTok{, }\StringTok{"cat2"}\NormalTok{, }\StringTok{"cat3"}\NormalTok{, }\StringTok{"cat4"}\NormalTok{))}
+\NormalTok{df}\OperatorTok{$}\NormalTok{C <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(df}\OperatorTok{$}\NormalTok{C, }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"male"}\NormalTok{, }\StringTok{"female"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -224,8 +103,8 @@ Then we can use \texttt{table1()}.
 \end{Highlighting}
 \end{Shaded}
 
-\tiny
 \begin{verbatim}
+
 |==============================|
               Mean/Count (SD/%)
  Observations 6                
@@ -235,12 +114,12 @@ Then we can use \texttt{table1()}.
     cat3      1 (20%)          
     cat4      1 (20%)          
  B                             
-              2.70 (1.29)      
+              2.7 (1.3)        
  C                             
     male      2 (33.3%)        
     female    4 (66.7%)        
  D                             
-              -0.04 (0.46)     
+              -0.2 (0.5)       
 |==============================|
 \end{verbatim}
 
@@ -256,25 +135,26 @@ grouping variable--in this case, \texttt{C}.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{table1}\NormalTok{(df, A, B, D,}
-       \DataTypeTok{splitby =} \NormalTok{~C)}
+       \DataTypeTok{splitby =} \OperatorTok{~}\NormalTok{C)}
 \end{Highlighting}
 \end{Shaded}
 
-\tiny
 \begin{verbatim}
-|=====================================|
-              male         female     
- Observations 2            4          
- A                                    
-    cat1      1 (50%)      1 (33.3%)  
-    cat2      1 (50%)      0 (0%)     
-    cat3      0 (0%)       1 (33.3%)  
-    cat4      0 (0%)       1 (33.3%)  
- B                                    
-              1.75 (0.49)  3.33 (1.30)
- D                                    
-              -0.29 (0.01) 0.08 (0.53)
-|=====================================|
+
+|=================================|
+                  C 
+              male      female    
+ Observations 2         4         
+ A                                
+    cat1      1 (50%)   1 (33.3%) 
+    cat2      1 (50%)   0 (0%)    
+    cat3      0 (0%)    1 (33.3%) 
+    cat4      0 (0%)    1 (33.3%) 
+ B                                
+              1.8 (0.5) 3.3 (1.3) 
+ D                                
+              0.1 (0.8) -0.3 (0.3)
+|=================================|
 \end{verbatim}
 
 \end{frame}
@@ -288,26 +168,27 @@ the \(\chi^2\) approximation is not accurate with cells this small.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{table1}\NormalTok{(df, A, B, D,}
-       \DataTypeTok{splitby =} \NormalTok{~C,}
+       \DataTypeTok{splitby =} \OperatorTok{~}\NormalTok{C,}
        \DataTypeTok{test=}\OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\tiny
 \begin{verbatim}
-|=============================================|
-              male         female      P-Value
- Observations 2            4                  
- A                                     0.405  
-    cat1      1 (50%)      1 (33.3%)          
-    cat2      1 (50%)      0 (0%)             
-    cat3      0 (0%)       1 (33.3%)          
-    cat4      0 (0%)       1 (33.3%)          
- B                                     0.162  
-              1.75 (0.49)  3.33 (1.30)        
- D                                     0.262  
-              -0.29 (0.01) 0.08 (0.53)        
-|=============================================|
+
+|=========================================|
+                      C 
+              male      female     P-Value
+ Observations 2         4                 
+ A                                 0.405  
+    cat1      1 (50%)   1 (33.3%)         
+    cat2      1 (50%)   0 (0%)            
+    cat3      0 (0%)    1 (33.3%)         
+    cat4      0 (0%)    1 (33.3%)         
+ B                                 0.162  
+              1.8 (0.5) 3.3 (1.3)         
+ D                                 0.605  
+              0.1 (0.8) -0.3 (0.3)        
+|=========================================|
 \end{verbatim}
 
 \end{frame}
@@ -320,26 +201,26 @@ need:
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{table1}\NormalTok{(df, A, B, D,}
-       \DataTypeTok{splitby =} \NormalTok{~C,}
+       \DataTypeTok{splitby =} \OperatorTok{~}\NormalTok{C,}
        \DataTypeTok{test=}\OtherTok{TRUE}\NormalTok{,}
-       \DataTypeTok{simple =} \OtherTok{TRUE}\NormalTok{,}
-       \DataTypeTok{condense =} \OtherTok{TRUE}\NormalTok{)}
+       \DataTypeTok{type =} \KeywordTok{c}\NormalTok{(}\StringTok{"simple"}\NormalTok{, }\StringTok{"condense"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-\tiny
 \begin{verbatim}
-|=============================================|
-              male         female      P-Value
- Observations 2            4                  
- A                                     0.405  
-    cat1      50%          33.3%              
-    cat2      50%          0%                 
-    cat3      0%           33.3%              
-    cat4      0%           33.3%              
- B            1.75 (0.49)  3.33 (1.30) 0.162  
- D            -0.29 (0.01) 0.08 (0.53) 0.262  
-|=============================================|
+
+|=========================================|
+                      C 
+              male      female     P-Value
+ Observations 2         4                 
+ A                                 0.405  
+    cat1      50%       33.3%             
+    cat2      50%       0%                
+    cat3      0%        33.3%             
+    cat4      0%        33.3%             
+ B            1.8 (0.5) 3.3 (1.3)  0.162  
+ D            0.1 (0.8) -0.3 (0.3) 0.605  
+|=========================================|
 \end{verbatim}
 
 \end{frame}
@@ -366,7 +247,7 @@ Other quick descriptive functions exist; here are a few of them.
 \KeywordTok{describe}\NormalTok{(df)         ## produces summary statistics for continuous variables}
 
 \KeywordTok{library}\NormalTok{(Hmisc)       ## install first}
-\NormalTok{Hmisc::}\KeywordTok{describe}\NormalTok{(df)  ## gives summary for each variable separately}
+\NormalTok{Hmisc}\OperatorTok{::}\KeywordTok{describe}\NormalTok{(df)  ## gives summary for each variable separately}
 \end{Highlighting}
 \end{Shaded}
 
@@ -428,11 +309,11 @@ and variables you provide.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{qplot}\NormalTok{(df$A)  ## Makes a simple histogram}
+\KeywordTok{qplot}\NormalTok{(df}\OperatorTok{$}\NormalTok{A)  ## Makes a simple histogram}
 \end{Highlighting}
 \end{Shaded}
 
-\centerline{\includegraphics[height=2in]{03_UnderstandData_files/figure-beamer/unnamed-chunk-9-1.pdf}}
+\includegraphics{03_UnderstandData_files/figure-beamer/unnamed-chunk-9-1.pdf}
 
 \end{frame}
 
@@ -440,11 +321,15 @@ and variables you provide.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{qplot}\NormalTok{(df$D, df$B)  ## Makes a scatterplot}
+\KeywordTok{qplot}\NormalTok{(df}\OperatorTok{$}\NormalTok{D, df}\OperatorTok{$}\NormalTok{B)  ## Makes a scatterplot}
 \end{Highlighting}
 \end{Shaded}
 
-\centerline{\includegraphics[height=2in]{03_UnderstandData_files/figure-beamer/unnamed-chunk-10-1.pdf}}
+\begin{verbatim}
+Warning: Removed 1 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{03_UnderstandData_files/figure-beamer/unnamed-chunk-10-1.pdf}
 
 \end{frame}
 
@@ -465,12 +350,12 @@ the variable ``D'' and then we color it by variable ``C'' as well.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{C, }\DataTypeTok{y=}\NormalTok{D)) +}
-\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =} \NormalTok{C))}
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{C, }\DataTypeTok{y=}\NormalTok{D)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ C))}
 \end{Highlighting}
 \end{Shaded}
 
-\centerline{\includegraphics[height=2in]{03_UnderstandData_files/figure-beamer/unnamed-chunk-11-1.pdf}}
+\includegraphics{03_UnderstandData_files/figure-beamer/unnamed-chunk-11-1.pdf}
 
 \end{frame}
 
@@ -480,12 +365,12 @@ Here are a few more examples:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{C)) +}
-\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat=}\StringTok{"count"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =} \NormalTok{C))}
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{C)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat=}\StringTok{"count"}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ C))}
 \end{Highlighting}
 \end{Shaded}
 
-\centerline{\includegraphics[height=2in]{03_UnderstandData_files/figure-beamer/unnamed-chunk-12-1.pdf}}
+\includegraphics{03_UnderstandData_files/figure-beamer/unnamed-chunk-12-1.pdf}
 
 \end{frame}
 
@@ -493,12 +378,16 @@ Here are a few more examples:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{B, }\DataTypeTok{y=}\NormalTok{D)) +}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =} \NormalTok{C))}
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{B, }\DataTypeTok{y=}\NormalTok{D)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ C))}
 \end{Highlighting}
 \end{Shaded}
 
-\centerline{\includegraphics[height=2in]{03_UnderstandData_files/figure-beamer/unnamed-chunk-13-1.pdf}}
+\begin{verbatim}
+Warning: Removed 1 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{03_UnderstandData_files/figure-beamer/unnamed-chunk-13-1.pdf}
 \emph{Note that the warning that says it removed a row is because we had
 a missing value in ``C''.}
 
@@ -517,14 +406,14 @@ adjustments. Notice that we just added two extra lines telling
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{C, }\DataTypeTok{y=}\NormalTok{D)) +}
-\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =} \NormalTok{C)) +}
-\StringTok{  }\KeywordTok{theme_bw}\NormalTok{() +}
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{C, }\DataTypeTok{y=}\NormalTok{D)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ C)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_bw}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{"dodgerblue4"}\NormalTok{, }\StringTok{"coral2"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-\centerline{\includegraphics[height=2in]{03_UnderstandData_files/figure-beamer/unnamed-chunk-14-1.pdf}}
+\includegraphics{03_UnderstandData_files/figure-beamer/unnamed-chunk-14-1.pdf}
 
 \end{frame}
 
@@ -556,5 +445,3 @@ understand our data and our models as well as communicate our results.
 \centerline{\includegraphics[height=7in]{Figures/grass_landscape_arch.jpg}}
 
 \end{frame}
-
-\end{document}

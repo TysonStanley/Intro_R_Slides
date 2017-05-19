@@ -3,14 +3,14 @@ title: "Chapter 3: Understanding and Describing Your Data"
 author: "Tyson S. Barrett"
 date: "Summer 2017"
 institute: "Utah State University"
-fontsize: 10pt
+fontsize: 9pt
 output:
   beamer_presentation:
     theme: "metropolis"
     toc: true
-    fig_width: 5
-    fig_height: 4
-    fig_caption: true
+    fig_width: 4
+    fig_height: 2.5
+    fig_caption: false
     df_print: default
     keep_tex: true
     incremental: false
@@ -110,8 +110,7 @@ Finally, we can play around with the formatting a bit to match what we need:
 table1(df, A, B, D,
        splitby = ~C,
        test=TRUE,
-       simple = TRUE,
-       condense = TRUE)
+       type = c("simple", "condense"))
 ```
 
 ## Table 1
