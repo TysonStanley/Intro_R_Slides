@@ -1,0 +1,184 @@
+---
+title: "Miscellaneous Topics"
+author: "Tyson S. Barrett"
+date: "Summer 2017"
+institute: "Utah State University"
+fontsize: 10pt
+output:
+  beamer_presentation:
+    theme: "metropolis"
+    toc: true
+    fig_width: 4
+    fig_height: 3
+    fig_caption: true
+    df_print: default
+    keep_tex: true
+    incremental: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+## Good Quote
+
+> "All the cool kids use R."
+>
+> --- Anonymous
+
+## Introduction
+We need to cover a few additional topics, as well as review some topics:
+
+1. Loops (More Concrete Examples)
+2. RMarkdown
+3. Finding Relevant Packages
+4. Modeling Summary
+5. Final Quiz
+
+# Loops
+## Loops
+
+This is a very important tool to use in data cleaning.
+
+\vspace{25pt}
+
+##### Example: You have `999` as a placeholder throughout your data. How can you quickly change those to `NA`?
+
+## Loops
+Here's one way:
+```{r, eval=FALSE}
+library(furniture)
+df[] <- lapply(df, washer, 999)
+```
+
+And another:
+```{r, eval=FALSE}
+df[] <- lapply(df, function(x) ifelse(x == 999, NA, x))
+```
+
+\vspace{20pt}
+
+Note: the `[]` after the `df` forces `lapply()` to keep it in a data.frame :)
+
+## Loops
+##### Another example: You need to recode the 5th, 10th, and 20th through 30th variables. How can you do that with a loop?
+
+## Loops
+Here's one way:
+```{r, eval=FALSE}
+library(forcats)
+df[, c(5,10,20:30)] <- lapply(df[, c(5,10,20:30)], fct_recode, 1 = "5", 2 = "4", 4 = "2", 5 = "1")
+```
+
+And another:
+```{r, eval=FALSE}
+library(forcats)
+for (i in c(5,10,20:30)){
+  df[, i] = fct_recode(df[, i], 1 = "5", 2 = "4", 4 = "2", 5 = "1")
+}
+```
+
+# RMarkdown
+## RMarkdown
+
+So much to do! But focus on the basics :)
+
+1. The key to the whole thing is that you can use regular text and `R` code together.
+2. The `R chunks` are very flexible so that you usually can get the results to look the way you want.
+3. Markdown is a markup language but is not a WYSIWYG.[^1] But, you can always knit to see how it is looking.
+4. Practice with it. Try things out.
+
+[^1]: What You See Is What You Get
+
+## RMarkdown
+The text can be any text you would normally put in a document.
+
+Code chunks can be any functioning `R` code.
+
+Check out the following links for more information: 
+
+1. [RStudio and RMarkdown](http://rmarkdown.rstudio.com/lesson-1.html)
+2. [Nice Youtube Tutorial](https://www.youtube.com/watch?v=DNS7i2m4sB0)
+3. [Other Nice, More Indepth Tutorial](https://www.youtube.com/watch?v=cWJzjHh_3kk)
+
+# Finding Relevant Packages
+## Finding Relevant Packages
+
+Much of this results from two things:
+
+1. Experience: you find packages that you like and trust over time
+2. Google: The top results in Google are often good ones (at least well used).
+
+## Finding Cronbach's Alpha
+
+Example of finding a package for cronbach's alpha.
+
+# Modeling Summary
+## Modeling Summary
+
+I wanted to provide you with a quick summary of packages and functions needed for different model types. 
+
+```{r, echo=FALSE}
+models = cbind("Model" = c("T-Test", "ANOVA", "Linear", "Logistic", "Poisson", "GEE", "Mixed Effects (MLM)", "SEM"),
+               "Package" = c("", "", "", "", "", "gee or geepack", "lme4", "lavaan"),
+               "Function" = c("t.test()", "aov()", "lm()", "glm() with 'binomial'", "glm() with 'poisson'", "gee() or geeglm()", "lmer()", "sem() or cfa()"))
+knitr::kable(models)
+```
+
+
+
+# Final Quiz
+## Final Quiz
+
+Let's see if you are comfortable with the following scenarios/lines of code.
+
+## 1. Data Manipulation
+
+You want to do three things:
+
+1. Create a binary depression variable based on the level of the continuous depression variable (above a value of 10),
+2. Filter out those that have no depression (level 0 of the new depression variable),
+3. Find the mean, sd, and range of the productivity variable by sex.
+
+## 2. Reshape That
+
+Your data is in wide format. It is a longitudinal data set, with two observations per individual. What steps do you take to reshape it into long format?
+
+## 3. Visualize It
+
+Your data is again in wide format. It is longitudinal, with two observations per individual.
+
+You want to create:
+
+1. A scatterplot comparing mental aptitude and productivity at time one,
+2. A line graph showing the means of productivity by sex at each time point,
+3. Someone sends you the following code and you want to know what it does.
+
+```{r, eval=FALSE}
+ggplot(df, aes(x = Sex, y = Productivity, color = Sex)) +
+  geom_boxplot() +
+  scale_color_manual(values = c("red", "not_red")) +
+  theme(legend.position = "bottom")
+```
+
+
+## 4. Strut Yo' Stuff (i.e. Modeling)
+
+If you have repeated measures data, what format does you data need to be in to analyze it with either RM-ANOVA or Mixed Effects?
+
+## 5. RMarkdown
+
+How do you create a new `rmarkdown` file?
+
+In `rmarkdown` how can you insert inline r syntax?
+
+
+# Closing Remarks
+## Thanks!
+
+Thanks for participating. I hope this was a great start for you in using `R` throughout your careers. 
+
+Let me know if I can help in the future with `R` or stat related things.
+
+

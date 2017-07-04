@@ -1,0 +1,298 @@
+\section{Introduction}\label{introduction}
+
+\begin{frame}{Good Quote}
+
+\begin{quote}
+``All the cool kids use R.''
+
+--- Anonymous
+\end{quote}
+
+\end{frame}
+
+\begin{frame}{Introduction}
+
+We need to cover a few additional topics, as well as review some topics:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Loops (More Concrete Examples)
+\item
+  RMarkdown
+\item
+  Finding Relevant Packages
+\item
+  Modeling Summary
+\item
+  Final Quiz
+\end{enumerate}
+
+\end{frame}
+
+\section{Loops}\label{loops}
+
+\begin{frame}[fragile]{Loops}
+
+This is a very important tool to use in data cleaning.
+
+\vspace{25pt}
+
+\begin{block}{Example: You have \texttt{999} as a placeholder throughout
+your data. How can you quickly change those to \texttt{NA}?}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]{Loops}
+
+Here's one way:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(furniture)}
+\NormalTok{df[] <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(df, washer, }\DecValTok{999}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+And another:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df[] <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(df, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{ifelse}\NormalTok{(x }\OperatorTok{==}\StringTok{ }\DecValTok{999}\NormalTok{, }\OtherTok{NA}\NormalTok{, x))}
+\end{Highlighting}
+\end{Shaded}
+
+\vspace{20pt}
+
+Note: the \texttt{{[}{]}} after the \texttt{df} forces \texttt{lapply()}
+to keep it in a data.frame :)
+
+\end{frame}
+
+\begin{frame}{Loops}
+
+\begin{block}{Another example: You need to recode the 5th, 10th, and
+20th through 30th variables. How can you do that with a loop?}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]{Loops}
+
+Here's one way:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(forcats)}
+\NormalTok{df[, }\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{20}\OperatorTok{:}\DecValTok{30}\NormalTok{)] <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(df[, }\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{20}\OperatorTok{:}\DecValTok{30}\NormalTok{)], fct_recode, }\DecValTok{1}\NormalTok{ =}\StringTok{ "5"}\NormalTok{, }\DecValTok{2}\NormalTok{ =}\StringTok{ "4"}\NormalTok{, }\DecValTok{4}\NormalTok{ =}\StringTok{ "2"}\NormalTok{, }\DecValTok{5}\NormalTok{ =}\StringTok{ "1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+And another:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(forcats)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{20}\OperatorTok{:}\DecValTok{30}\NormalTok{))\{}
+\NormalTok{  df[, i] =}\StringTok{ }\KeywordTok{fct_recode}\NormalTok{(df[, i], }\DecValTok{1}\NormalTok{ =}\StringTok{ "5"}\NormalTok{, }\DecValTok{2}\NormalTok{ =}\StringTok{ "4"}\NormalTok{, }\DecValTok{4}\NormalTok{ =}\StringTok{ "2"}\NormalTok{, }\DecValTok{5}\NormalTok{ =}\StringTok{ "1"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\section{RMarkdown}\label{rmarkdown}
+
+\begin{frame}[fragile]{RMarkdown}
+
+So much to do! But focus on the basics :)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The key to the whole thing is that you can use regular text and
+  \texttt{R} code together.
+\item
+  The \texttt{R\ chunks} are very flexible so that you usually can get
+  the results to look the way you want.
+\item
+  Markdown is a markup language but is not a WYSIWYG.\footnote<.->{What
+    You See Is What You Get} But, you can always knit to see how it is
+  looking.
+\item
+  Practice with it. Try things out.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}[fragile]{RMarkdown}
+
+The text can be any text you would normally put in a document.
+
+Code chunks can be any functioning \texttt{R} code.
+
+Check out the following links for more information:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \href{http://rmarkdown.rstudio.com/lesson-1.html}{RStudio and
+  RMarkdown}
+\item
+  \href{https://www.youtube.com/watch?v=DNS7i2m4sB0}{Nice Youtube
+  Tutorial}
+\item
+  \href{https://www.youtube.com/watch?v=cWJzjHh_3kk}{Other Nice, More
+  Indepth Tutorial}
+\end{enumerate}
+
+\end{frame}
+
+\section{Finding Relevant Packages}\label{finding-relevant-packages}
+
+\begin{frame}{Finding Relevant Packages}
+
+Much of this results from two things:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Experience: you find packages that you like and trust over time
+\item
+  Google: The top results in Google are often good ones (at least well
+  used).
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Finding Cronbach's Alpha}
+
+Example of finding a package for cronbach's alpha.
+
+\end{frame}
+
+\section{Modeling Summary}\label{modeling-summary}
+
+\begin{frame}{Modeling Summary}
+
+I wanted to provide you with a quick summary of packages and functions
+needed for different model types.
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+Model & Package & Function\tabularnewline
+\midrule
+\endhead
+T-Test & & t.test()\tabularnewline
+ANOVA & & aov()\tabularnewline
+Linear & & lm()\tabularnewline
+Logistic & & glm() with `binomial'\tabularnewline
+Poisson & & glm() with `poisson'\tabularnewline
+GEE & gee or geepack & gee() or geeglm()\tabularnewline
+Mixed Effects (MLM) & lme4 & lmer()\tabularnewline
+SEM & lavaan & sem() or cfa()\tabularnewline
+\bottomrule
+\end{longtable}
+
+\end{frame}
+
+\section{Final Quiz}\label{final-quiz}
+
+\begin{frame}{Final Quiz}
+
+Let's see if you are comfortable with the following scenarios/lines of
+code.
+
+\end{frame}
+
+\begin{frame}{1. Data Manipulation}
+
+You want to do three things:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create a binary depression variable based on the level of the
+  continuous depression variable (above a value of 10),
+\item
+  Filter out those that have no depression (level 0 of the new
+  depression variable),
+\item
+  Find the mean, sd, and range of the productivity variable by sex.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{2. Reshape That}
+
+Your data is in wide format. It is a longitudinal data set, with two
+observations per individual. What steps do you take to reshape it into
+long format?
+
+\end{frame}
+
+\begin{frame}[fragile]{3. Visualize It}
+
+Your data is again in wide format. It is longitudinal, with two
+observations per individual.
+
+You want to create:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  A scatterplot comparing mental aptitude and productivity at time one,
+\item
+  A line graph showing the means of productivity by sex at each time
+  point,
+\item
+  Someone sends you the following code and you want to know what it
+  does.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Sex, }\DataTypeTok{y =}\NormalTok{ Productivity, }\DataTypeTok{color =}\NormalTok{ Sex)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{, }\StringTok{"not_red"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"bottom"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}{4. Strut Yo' Stuff (i.e.~Modeling)}
+
+If you have repeated measures data, what format does you data need to be
+in to analyze it with either RM-ANOVA or Mixed Effects?
+
+\end{frame}
+
+\begin{frame}[fragile]{5. RMarkdown}
+
+How do you create a new \texttt{rmarkdown} file?
+
+In \texttt{rmarkdown} how can you insert inline r syntax?
+
+\end{frame}
+
+\section{Closing Remarks}\label{closing-remarks}
+
+\begin{frame}[fragile]{Thanks!}
+
+Thanks for participating. I hope this was a great start for you in using
+\texttt{R} throughout your careers.
+
+Let me know if I can help in the future with \texttt{R} or stat related
+things.
+
+\end{frame}

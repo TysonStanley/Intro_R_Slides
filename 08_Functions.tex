@@ -1,0 +1,586 @@
+\section{Introduction}\label{introduction}
+
+\begin{frame}{Introduction}
+
+\textbf{User-defined functions} --- functions you create yourself ---
+are an important tool.
+
+We will show how you can make your own functions.
+
+\end{frame}
+
+\begin{frame}[fragile]{What is a Function Anyway?}
+
+It is a special \texttt{R} object that performs something on another
+object or the environment.
+
+For example,
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{ggplot()} takes a \texttt{data.frame} object and variable
+  names and produces a plot.
+\item
+  \texttt{lm()} takes a formula, a \texttt{data.frame} and performs a
+  statistical model.
+\item
+  \texttt{gather()} takes a \texttt{data.frame} and produces another
+  \texttt{data.frame} in another form
+\end{itemize}
+
+\end{frame}
+
+\section{Creating a Function}\label{creating-a-function}
+
+\begin{frame}[fragile]{Creating a Function}
+
+It all starts with the function \texttt{function()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myfunction <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(arguments)\{}
+\NormalTok{  stuff =}\StringTok{ }\KeywordTok{that}\NormalTok{(you)}
+\NormalTok{  want =}\StringTok{ }\NormalTok{it }\OperatorTok{+}\StringTok{ }\NormalTok{to }\OperatorTok{+}\StringTok{ }\NormalTok{do }\OperatorTok{+}\StringTok{ }\DecValTok{4}
+\NormalTok{  you}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+After \texttt{function()} we use \texttt{\{} and \texttt{\}}. Everything
+in between is what you want the function to do.
+
+All you need to do is run the function and you can use it in the
+\texttt{R} session.
+
+\end{frame}
+
+\section{Named Functions}\label{named-functions}
+
+\begin{frame}[fragile]{Named Functions}
+
+These are functions that you assign a name to.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{}
+\NormalTok{  n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{  m <-}\StringTok{ }\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{n) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{(x)}
+  \KeywordTok{return}\NormalTok{(m)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Now, \texttt{mean2()} is a function you can use.
+
+\emph{What does this function do?}
+
+\end{frame}
+
+\begin{frame}[fragile]{Named Functions}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v1 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)   ## vector to try}
+\end{Highlighting}
+\end{Shaded}
+
+Let's give it a try using the vector \texttt{v1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean2}\NormalTok{(v1)                      ## our function}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(v1)                       ## the base R function}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.8
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Named Functions}
+
+For practice, we will write one more function. Let's make a function
+that takes a vector and gives us the N, the mean, and the standard
+deviation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{important_statistics <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, }\DataTypeTok{na.rm=}\OtherTok{FALSE}\NormalTok{)\{}
+\NormalTok{  N  <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{  M  <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x, }\DataTypeTok{na.rm=}\NormalTok{na.rm)}
+\NormalTok{  SD <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x, }\DataTypeTok{na.rm=}\NormalTok{na.rm)}
+  
+\NormalTok{  final <-}\StringTok{ }\KeywordTok{c}\NormalTok{(N, M, SD)}
+  \KeywordTok{return}\NormalTok{(final)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Named functions}
+
+One of the first things you should note is that we included a second
+argument in the function seen as \texttt{na.rm=FALSE} (you can have as
+many arguments as you want within reason).
+
+\begin{itemize}
+\tightlist
+\item
+  This argument has a default that we provide as \texttt{FALSE}
+\item
+  We take what is provided in the \texttt{na.rm} and give that to both
+  the \texttt{mean()} and \texttt{sd()} functions.
+\item
+  Finally, you should notice that we took several pieces of information
+  and combined them into the \texttt{final} object and returned that.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Named Functions}
+
+Let's try it out with the vector we created earlier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{important_statistics}\NormalTok{(v1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10.000000  1.800000  1.032796
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Named Functions}
+
+Looks good but we may want to change a few aesthetics. In the following
+code, we adjust it so we have each one labeled.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{important_statistics2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, }\DataTypeTok{na.rm=}\OtherTok{FALSE}\NormalTok{)\{}
+\NormalTok{  N  <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{  M  <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x, }\DataTypeTok{na.rm=}\NormalTok{na.rm)}
+\NormalTok{  SD <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x, }\DataTypeTok{na.rm=}\NormalTok{na.rm)}
+  
+\NormalTok{  final <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(N, }\StringTok{"Mean"}\NormalTok{=M, }\StringTok{"SD"}\NormalTok{=SD)}
+  \KeywordTok{return}\NormalTok{(final)}
+\NormalTok{\}}
+\KeywordTok{important_statistics2}\NormalTok{(v1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    N Mean       SD
+## 1 10  1.8 1.032796
+\end{verbatim}
+
+We will come back to this function and use it in some loops and see what
+else we can do with it.
+
+\end{frame}
+
+\section{Anonymous Functions}\label{anonymous-functions}
+
+\begin{frame}[fragile]{Anonymous Functions}
+
+Sometimes it is not worth saving a function but want to use it,
+generally within loops.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{thing}\NormalTok{(that, you, want, it, to, do, with, x)}
+\end{Highlighting}
+\end{Shaded}
+
+We will show a few of these in the looping section (although they are
+identical in nature to named functions, they just aren't named)
+
+\end{frame}
+
+\section{Why Write Your Own?}\label{why-write-your-own}
+
+\begin{frame}{Why Write Your Own?}
+
+Several reasons exist.
+
+\begin{itemize}
+\tightlist
+\item
+  Looping
+\item
+  Adjusting output
+\item
+  Performing a special function
+\item
+  Other customization
+\end{itemize}
+
+We are going to talk about looping in depth.
+
+\end{frame}
+
+\begin{frame}[fragile]{Looping}
+
+Writing your own functions for looping is very common and practical.
+
+Loops are things that are repeated.
+
+For example:
+
+\begin{itemize}
+\tightlist
+\item
+  We may want a certain statistic (like a mean) for every continuous
+  variable in the data set.
+\item
+  We may want to remove \texttt{999} from every variable in a data set.
+\item
+  We may want to change variable types of certain variables across the
+  whole data set.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Looping}
+
+Examples in \texttt{R} include:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{for} loops
+\item
+  the \texttt{apply} family of functions
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{For Loops}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)\{}
+  \KeywordTok{mean}\NormalTok{(data[, i])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{For Loops}
+
+Another example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\NormalTok{data =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/Dropbox/Teaching/R for Social Sciences/Data/WideFormat_TheOffice.csv"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(Prod1, MentalApt, PhysApt, Income, Children, SubsUse, Ment1, Ment2)}
+\NormalTok{thing =}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{8}\NormalTok{)\{}
+\NormalTok{  thing[[i]] =}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{mean}\NormalTok{(data[, i]), }\KeywordTok{sd}\NormalTok{(data[, i]))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{For Loops}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{thing}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##      [,1]     [,2]
+## [1,]  3.2 1.146423
+## 
+## [[2]]
+##      [,1]     [,2]
+## [1,]  5.2 2.305273
+## 
+## [[3]]
+##          [,1]     [,2]
+## [1,] 5.733333 1.869556
+## 
+## [[4]]
+##          [,1]     [,2]
+## [1,] 53.33333 12.63027
+## 
+## [[5]]
+##      [,1]      [,2]
+## [1,]  0.4 0.7367884
+## 
+## [[6]]
+##           [,1]      [,2]
+## [1,] 0.2666667 0.4577377
+## 
+## [[7]]
+##          [,1]     [,2]
+## [1,] 13.86667 3.602909
+## 
+## [[8]]
+##          [,1]    [,2]
+## [1,] 6.066667 2.65832
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{For loops}
+
+I like for loops. They are easy to understand and fiddle with, after
+some practice.
+
+However, they used to be slow in \texttt{R} and so they have a bad
+reputation.
+
+\end{frame}
+
+\begin{frame}[fragile]{The apply family}
+
+There are several \texttt{apply} functions in \texttt{R} that do loops
+for you.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{apply()}
+\item
+  \texttt{sapply()}
+\item
+  \texttt{lapply()}
+\item
+  \texttt{tapply()}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{sapply}
+
+Produces a vector based on the function that it is repeating.
+
+Both do the same thing here.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)\{}
+  \KeywordTok{mean}\NormalTok{(data[, i])}
+\NormalTok{\}}
+\KeywordTok{sapply}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(i) }\KeywordTok{mean}\NormalTok{(data[, i]))}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{sapply}
+
+Can also just provide the \texttt{data.frame} and it assumes you want
+the function (in this case \texttt{mean()}) applied to each variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sapply}\NormalTok{(data, mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Prod1  MentalApt    PhysApt     Income   Children    SubsUse 
+##  3.2000000  5.2000000  5.7333333 53.3333333  0.4000000  0.2666667 
+##      Ment1      Ment2 
+## 13.8666667  6.0666667
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{lapply}
+
+Produces a list. Just like \texttt{sapply()} it takes a
+\texttt{data.frame} and a function and applies it across the variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{lapply}\NormalTok{(data, mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $Prod1
+## [1] 3.2
+## 
+## $MentalApt
+## [1] 5.2
+## 
+## $PhysApt
+## [1] 5.733333
+## 
+## $Income
+## [1] 53.33333
+## 
+## $Children
+## [1] 0.4
+## 
+## $SubsUse
+## [1] 0.2666667
+## 
+## $Ment1
+## [1] 13.86667
+## 
+## $Ment2
+## [1] 6.066667
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{tapply}
+
+Is a bit different than the rest. It doesn't do much in terms of looping
+necessarily (although you can have it do that). Instead, it applies a
+function based on a grouping variable. With the \texttt{tidyverse},
+however, this is not often used any more.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tapply}\NormalTok{(data}\OperatorTok{$}\NormalTok{Income, data}\OperatorTok{$}\NormalTok{Children, mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        0        1        2 
+## 53.18182 55.00000 52.50000
+\end{verbatim}
+
+\emph{How could you do this in the \texttt{tidyverse} framework?}
+
+\end{frame}
+
+\section{Loops with User-Defined
+Functions}\label{loops-with-user-defined-functions}
+
+\begin{frame}[fragile]{Loops with User-Defined Functions}
+
+Going back to our \texttt{important\_statistics2()} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{important_statistics2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, }\DataTypeTok{na.rm=}\OtherTok{FALSE}\NormalTok{)\{}
+\NormalTok{  N  <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{  M  <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x, }\DataTypeTok{na.rm=}\NormalTok{na.rm)}
+\NormalTok{  SD <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x, }\DataTypeTok{na.rm=}\NormalTok{na.rm)}
+  
+\NormalTok{  final <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(N, }\StringTok{"Mean"}\NormalTok{=M, }\StringTok{"SD"}\NormalTok{=SD)}
+  \KeywordTok{return}\NormalTok{(final)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Let's put it in a loop.
+
+\end{frame}
+
+\begin{frame}[fragile]{Loops with User-Defined Functions}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{lapply}\NormalTok{(data, important_statistics2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $Prod1
+##    N Mean       SD
+## 1 15  3.2 1.146423
+## 
+## $MentalApt
+##    N Mean       SD
+## 1 15  5.2 2.305273
+## 
+## $PhysApt
+##    N     Mean       SD
+## 1 15 5.733333 1.869556
+## 
+## $Income
+##    N     Mean       SD
+## 1 15 53.33333 12.63027
+## 
+## $Children
+##    N Mean        SD
+## 1 15  0.4 0.7367884
+## 
+## $SubsUse
+##    N      Mean        SD
+## 1 15 0.2666667 0.4577377
+## 
+## $Ment1
+##    N     Mean       SD
+## 1 15 13.86667 3.602909
+## 
+## $Ment2
+##    N     Mean      SD
+## 1 15 6.066667 2.65832
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Loops with User-Defined Functions}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sapply}\NormalTok{(data, important_statistics2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Prod1    MentalApt PhysApt  Income   Children  SubsUse   Ment1   
+## N    15       15        15       15       15        15        15      
+## Mean 3.2      5.2       5.733333 53.33333 0.4       0.2666667 13.86667
+## SD   1.146423 2.305273  1.869556 12.63027 0.7367884 0.4577377 3.602909
+##      Ment2   
+## N    15      
+## Mean 6.066667
+## SD   2.65832
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Loops with User-Defined Functions}
+
+It applied our function across the variables in the \texttt{data.frame}.
+So we can easily get information we want.
+
+This was a very simplified version of how I created the
+\texttt{table1()} function in \texttt{furniture}.
+
+\end{frame}
+
+\section{Conclusions}\label{conclusions}
+
+\begin{frame}[fragile]{Conclusions}
+
+Writing your own functions takes time and practice but it can be a
+worthwhile tool in using \texttt{R}.
+
+I recommend you start simple and start soon.
+
+Ultimately, you can make your own group of functions you use often and
+create a package for it so others can use them too :)
+
+\end{frame}

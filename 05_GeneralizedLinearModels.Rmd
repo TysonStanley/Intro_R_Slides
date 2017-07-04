@@ -72,19 +72,26 @@ df <- df %>%
 
 ## Good Quote
 
+\Large
+
 > "You must stick to your conviction, but be ready to abandon your assumptions."
 >
 > --- Dennis Waitley
 
 ## GLMs
+
+\large
 Generalized Linear Models (GLMs):
 
-@. Are extensions of linear regression to areas where assumptions of normality and homoskedasticity do not hold
-@. There are several versions of GLM's, each for different types and distributions of outcomes. 
+1. Are extensions of linear regression to areas where assumptions of normality and homoskedasticity do not hold
+2. There are several versions of GLM's, each for different types and distributions of outcomes. 
 
 We are going to go through several of the most common GLMs. 
 
 ## Types
+
+\large 
+
 We discuss:
 
 1. Logistic Regression
@@ -97,78 +104,116 @@ We discuss:
 
 ## Logistic Regression
 
+\large
 For binary outcomes (e.g., yes or no, correct or incorrect, sick or healthy)
 
+$$
+logit(Y) = \beta_0 + \beta_1 X_1 + ... + \epsilon
+$$
+
+where $logit(Y) = ln\Big(\frac{Prob(Y = 1)}{1 - Prob(Y = 1)}\Big)$
+
+## Prep Data
+\small
 ```{r}
 ## First creating binary depression variable
+## Use mutate()
 df <- df %>%
   mutate(dep = dpq010 + dpq020 + dpq030 + dpq040 + dpq050 +
                dpq060 + dpq070 + dpq080 + dpq090) %>%
   mutate(dep2 = ifelse(dep >= 10, 1,
                 ifelse(dep < 10, 0, NA)))
-```
-
-Note:
-
-1. IF depression $\geq 10$ then dep2 is 1, 
-2. IF dpression $< 10$, then dep2 is 0, 
-3. ELSE dep2 is NA.
-
-## Running Logistic Regression
-
-Since the outcome is binary, we use a statistical transformation to make things work well. This makes it so the outcome is in "log-odds." A simple exponentiation of the coefficients and we get very useful "odds ratios." 
-
-Luckily, running a logistic regression is simple in `R`. We first create the binary outcome variable called `dep`. We use a new function called `mutate` to create a new variable (we could do this a number of ways but this is probably the cleanest way).
-
-## Running Logistic Regression
-
-```{r, message=FALSE, warning=FALSE}
 ## Fix some placeholders
 df <- df %>%
   mutate(asthma = washer(mcq010, 9),
          asthma = washer(asthma, 2, value = 0)) %>%
   mutate(sed = washer(pad680, 9999, 7777))
 ```
+\large
+Note:
+
+1. IF depression $\geq 10$ then dep2 is 1, 
+2. IF dpression $< 10$, then dep2 is 0, 
+3. ELSE dep2 is NA.
+
 
 ## Running Logistic Regression
 
-Now let's run the logistic regression:
-\small
-```{r, message=FALSE, warning=FALSE}
+\Large
+
+- $\beta$s are in "log-odds" 
+- $e^{\beta}$ is an "odds ratio" 
+
+In `R`, this is simple.
+
+## Running Logistic Regression
+
+\large
+
+```{r, message=FALSE, warning=FALSE,eval=FALSE}
 l_fit <- glm(dep2 ~ asthma + sed + race + famsize,
              data = df,
              family = "binomial")
 summary(l_fit)
 ```
-\normalsize
+
+## Running Logistic Regression
+
+\small
+```{r, message=FALSE, warning=FALSE,echo=FALSE}
+l_fit <- glm(dep2 ~ asthma + sed + race + famsize,
+             data = df,
+             family = "binomial")
+summary(l_fit)
+```
+\Large
 
 ## Output of Logistic Regression
 
+\large
+
 We used `glm()` (stands for generalized linear model)
 
-The key to making it logistic, since you can use `glm()` for a linear model using maximum likelihood instead of `lm()` with least squares, is `family = "binomial"`
-
+- The key to making it logistic, since you can use `glm()` for a linear model using maximum likelihood instead of `lm()` with least squares, is `family = "binomial"`
+- Default link in "binomial" is `logit`.
+- Can also do `probit` to use probit regression.
 
 # Poisson Regression
 
 ## Poisson Regression
 
-Again, we will use the `glm()` function. 
+\large
 
-The difference here is we will be using an outcome that is a count variable. For example, the sedentary variable (`sed`) that we have in `df` is a count of the minutes of sedentary activity.
+Again, use the `glm()` function. 
+
+- The difference here is we will be using an outcome that is a count variable. 
+   - For example, the sedentary variable (`sed`) that we have in `df` is a count of the minutes of sedentary activity.
 
 ## Running Poisson Regression
-\tiny
-```{r, message=FALSE, warning=FALSE}
+
+\large
+
+```{r, message=FALSE, warning=FALSE,eval=FALSE}
 p_fit <- glm(sed ~ asthma + race + famsize,
              data = df,
              family = "poisson")
 summary(p_fit)
 ```
-\normalsize
+
+
+## Running Poisson Regression
+\tiny
+```{r, message=FALSE, warning=FALSE,echo=FALSE}
+p_fit <- glm(sed ~ asthma + race + famsize,
+             data = df,
+             family = "poisson")
+summary(p_fit)
+```
+
 
 ## Running Poisson Regression
 
+\small
 Sedentary may be over-dispersed:
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height = 3, fig.width=4}
 qplot(df$sed, alpha = .75, binwidth = 75) + 
@@ -176,16 +221,25 @@ qplot(df$sed, alpha = .75, binwidth = 75) +
   labs(x = "Minutes of Sedentary Behavior") +
   scale_alpha(guide=FALSE)
 ```
-and so other methods related to poisson may be necessary. For this book, we are not going to be delving into these in depth but we will introduce some below.
+
+## Running Poisson Regression
+\Large
+and so other methods related to poisson may be necessary. 
+
+- See gamma, hurdle models, and negative binomial models next
 
 
 ## Gamma
 
+\Large
+
 * very similar to poisson but does not require integers and can handle more dispersion. 
 * the outcome must have values $> 0$.
 
+## Gamma
+
 \small
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 ## Adjust sed
 df$sed_gamma <- df$sed + .01
 g_fit <- glm(sed_gamma ~ asthma + race + famsize,
@@ -193,16 +247,35 @@ g_fit <- glm(sed_gamma ~ asthma + race + famsize,
              family = "Gamma")
 summary(g_fit)
 ```
-\normalsize
+
+## Gamma
+
+\small
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+## Adjust sed
+df$sed_gamma <- df$sed + .01
+g_fit <- glm(sed_gamma ~ asthma + race + famsize,
+             data = df,
+             family = "Gamma")
+summary(g_fit)
+```
+\Large
 
 ## Two-Part or Hurdle Models
 
-We are going to use the `pscl` package to run a hurdle model. These models are built for situations where there is a count variable with many zeros ("zero-inflated"). The hurdle model makes slightly different assumptions regarding the zeros than the pure negative binomial that we present next. The hurdle consists of two models: one for whether the person had a zero or more (binomial) and if more than zero, how many (poisson).
+\large
+
+- Use the `pscl` package to run a hurdle model. 
+- These models are built for situations where there is a count variable with many zeros ("zero-inflated"). 
+- The hurdle model makes slightly different assumptions regarding the zeros than the pure negative binomial that we present next. 
+- The hurdle consists of two models: one for whether the person had a zero or more (binomial) and if more than zero, how many (poisson).
 
 To run a hurdle model, we are going to make a sedentary variable with many more zeros to illustrate and then we will run a hurdle model.
 
+## Two-Part or Hurdle Models
+
 \small
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 ## Zero inflated sedentary (don't worry too much about the specifics)
 df$sed_zero <- ifelse(sample(1:100, 
                              size = length(df$sed), 
@@ -216,21 +289,61 @@ summary(h_fit)
 ```
 \normalsize
 
-Notice that the output has two parts: "Count model coefficients (truncated poisson with log link):" and "Zero hurdle model coefficients (binomial with logit link):". Together they tell us about the relationship between the predictors and a count variable with many zeros.
+## Two-Part or Hurdle Models
+
+\tiny
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+## Zero inflated sedentary (don't worry too much about the specifics)
+df$sed_zero <- ifelse(sample(1:100, 
+                             size = length(df$sed), 
+                             replace=TRUE) %in% c(5,10,11,20:25), 0, 
+                      df$sed)
+## Hurdle model
+library(pscl)
+h_fit = hurdle(sed_zero ~ asthma + race + famsize,
+               data = df)
+summary(h_fit)
+```
+\Large
+
+## Hurdle Models
+
+\large
+
+Notice that the output has two parts: 
+
+1. "Count model coefficients (truncated poisson with log link):" and 
+2. "Zero hurdle model coefficients (binomial with logit link):". 
+
+Together they tell us about the relationship between the predictors and a count variable with many zeros.
 
 
 ## Negative Binomial
 
-Similar to that above, negative binomial is for zero-inflated count variables. It makes slightly different assumptions than the hurdle and doesn't use a two-part approach. In order to run a negative binomial model we'll use the `MASS` package and the `glm.nb()` function.
+\large
+
+- negative binomial is also for zero-inflated count variables.
+- It makes slightly different assumptions than the hurdle and doesn't use a two-part approach. 
+- Use the `MASS` package and the `glm.nb()` function.
 
 \small
-```{r, eval=FALSE, warning=FALSE, message=FALSE}
+```{r, eval=FALSE, warning=FALSE, message=FALSE,eval=FALSE}
 library(MASS)
 fit_nb <- glm.nb(sed_zero ~ asthma + race + famsize,
                  data = df)
 summary(fit_nb)
 ```
-\normalsize
+
+
+## Negative Binomial
+\small
+```{r, eval=FALSE, warning=FALSE, message=FALSE, echo=FALSE}
+library(MASS)
+fit_nb <- glm.nb(sed_zero ~ asthma + race + famsize,
+                 data = df)
+summary(fit_nb)
+```
+\Large
 
 Note that this model is not really appropriate because our data is somewhat contrived. 
 
@@ -239,11 +352,16 @@ Note that this model is not really appropriate because our data is somewhat cont
 
 ## Beta Regression
 
-For outcomes that are bound between a lower and upper bound, Beta Regression is a great method. For example, if we are looking at test scores that are bound between 0 and 100. It is a very flexible method and allows for some extra analysis regarding the variation. 
+\large
+
+- For outcomes that are bound between a lower and upper bound
+   - For example, if we are looking at test scores that are bound between 0 and 100. 
+- It is a very flexible method and allows for some extra analysis regarding the variation. 
 
 ## Running Beta Regression
 
-For this, we are going to use the `betareg` package. But first, we are going to reach a little and create a ficticiously bound variable in the data set.
+- Use the `betareg` package.
+- But first, we are going to reach a little and create a ficticiously bound variable in the data set.
 ```{r, message=FALSE, warning=FALSE, eval=FALSE}
 ## Variable bound between 0 and 1
 df$beta_var <- sample(seq(.05, .99, by = .01), 
@@ -257,6 +375,7 @@ summary(fit_beta)
 
 ## Running Beta Regression
 
+\tiny
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 ## Variable bound between 0 and 1
 df$beta_var <- sample(seq(.05, .99, by = .01), 
@@ -267,14 +386,34 @@ fit_beta <- betareg(beta_var ~ asthma + race + famsize,
                     data = df)
 summary(fit_beta)
 ```
-The output provides coefficients and the "Phi" coefficients. Both are important parts of using beta regression but we are not going to discuss it here. 
+\Large
+
+## Beta Regression
+
+\large
+
+- The output provides coefficients and the "Phi" coefficients.
+- Both are important parts of using beta regression but we are not going to discuss it here. 
 
 # Conclusions
 ## Conclusions
 
-There are many resources available to learn more about beta regression and each of these GLM's. As for now, we are going to move on to more complex modeling where there are clustering or repeated measures in the data. 
+\large
+
+There are many resources available to learn more about each of these GLM's. 
+
+As for now, we are going to move on to more complex modeling where there are clustering or repeated measures in the data. 
 
 ## Conclusions
 
-One of the great things about `R` is that most modeling is very similar to the basic `lm()` function. In all of these GLM's the arguments are nearly all the same: a formula, the data, and family of model. As you'll see for Multilevel and Other Models chapters, this does not change much. Having a good start with basic models and GLM's gets you ready for nearly every other modeling type in `R`.
+\large
+
+One of the great things about `R` is that most modeling is very similar to the basic `lm()` function. 
+
+- In all of these GLM's the arguments are nearly all the same: 
+    - a formula, 
+    - the data, and 
+    - family of model. 
+- As you'll see for Multilevel and Other Models chapters, this does not change much. 
+- Having a good start with basic models and GLM's gets you ready for nearly every other modeling type in `R`.
 

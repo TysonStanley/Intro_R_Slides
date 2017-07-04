@@ -1,0 +1,124 @@
+---
+title: "Practice"
+author: "Tyson S. Barrett"
+date: "6/22/2017"
+output: word_document
+---
+
+```{r jimmy, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# This is Our Practice Document
+
+## Section 1
+What do you think all these do?
+
+```{r, message=FALSE, warning=FALSE, comment=":)"}
+## 1. 
+library(tidyverse)
+
+## 2.
+setwd("~/Dropbox/Teaching/R for Social Sciences/Data/")
+
+## 3.
+d = read.csv("WideFormat_TheOffice.csv") %>%
+  mutate(Sex = factor(Sex))
+
+## 4.
+summary(d)
+
+## 5.
+d %>%
+  group_by(Sex) %>%
+  summarize(Dep = mean(Depr1, na.rm=TRUE),
+            DepSD = sd(Depr1, na.rm=TRUE))
+
+## 6.
+d2 = d %>%
+  select(Name, Sex, Income, Awkward1, Awkward2, Prod1, Prod2, Depr1, Depr2) %>%
+  as.data.frame %>%
+  reshape(varying = list(c("Awkward1", "Awkward2"), c("Prod1", "Prod2"),
+                         c("Depr1", "Depr2")),
+          direction = "long",
+          v.names = c("Awkward", "Prod", "Depr"),
+          timevar = "Time",
+          idvar = "Name") %>%
+  arrange(Name, Time)
+
+## 7. 
+d2$Name
+
+## 8. 
+d2$Sex * 3
+
+## 9.
+## You only want those that had high Depression scores across both waves.
+## How would you subset your data to analyze just those individuals?
+
+d %>%
+  filter(Depr1 > 10 | Depr2 > 10)
+
+## 10.
+d = d %>%
+  mutate(atrisk = ifelse(Depr1 > 10 & SubsUse == 1, "at risk",
+                  ifelse(Depr1 <= 10 | SubsUse == 0, "not at risk", NA)))
+
+furniture::table1(d, Prod1,
+                  splitby = ~Sex,
+                  type = "condense",
+                  output = "markdown")
+
+d = d %>%
+  filter(Depr1 > 10)
+```
+
+The mean of productivity at wave I was `r round(mean(d$Prod1),1)`.
+
+
+## Section 2
+
+You can also embed plots, for example:
+
+```{r, eval=FALSE}
+###############
+## Functions ##
+###############
+
+## What are the elements of writing a named function?
+
+## What does the following code do?
+thing = list()
+for (i in 1:10){
+  thing[[i]] = mean(data[, i])
+}
+
+## What about this line of code?
+thing = lapply(data, mean)
+
+
+#############
+## ggplot2 ##
+#############
+
+## Let's practice with ggplot2 :)
+## Take a look at the office data set (long or wide) and think of how you
+## could present the data informatively. Then answer these questions:
+## 1. What type of plot do you want to make?
+## 2. What does the data need to look like to get it ready for this plot
+##    (i.e., what format does it need to be in)?
+## 3. What R code would you use to make it?
+
+## What would you expect this plot to look like?
+ggplot(summed_data, aes(x = time, y = mean, 
+                        group = gender, 
+                        fill = gender,
+                        color = gender)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin = mean - se, ymax = mean + se))
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

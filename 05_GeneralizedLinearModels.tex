@@ -2,6 +2,8 @@
 
 \begin{frame}{Good Quote}
 
+\Large
+
 \begin{quote}
 ``You must stick to your conviction, but be ready to abandon your
 assumptions.''
@@ -13,6 +15,7 @@ assumptions.''
 
 \begin{frame}{GLMs}
 
+\large
 Generalized Linear Models (GLMs):
 
 \begin{enumerate}
@@ -31,6 +34,8 @@ We are going to go through several of the most common GLMs.
 \end{frame}
 
 \begin{frame}{Types}
+
+\large 
 
 We discuss:
 
@@ -53,22 +58,42 @@ We discuss:
 
 \section{Logistic Regression}\label{logistic-regression}
 
-\begin{frame}[fragile]{Logistic Regression}
+\begin{frame}{Logistic Regression}
 
+\large
 For binary outcomes (e.g., yes or no, correct or incorrect, sick or
 healthy)
+
+\[
+logit(Y) = \beta_0 + \beta_1 X_1 + ... + \epsilon
+\]
+
+where \(logit(Y) = ln\Big(\frac{Prob(Y = 1)}{1 - Prob(Y = 1)}\Big)\)
+
+\end{frame}
+
+\begin{frame}[fragile]{Prep Data}
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{## First creating binary depression variable}
+\NormalTok{## Use mutate()}
 \NormalTok{df <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dep =}\NormalTok{ dpq010 }\OperatorTok{+}\StringTok{ }\NormalTok{dpq020 }\OperatorTok{+}\StringTok{ }\NormalTok{dpq030 }\OperatorTok{+}\StringTok{ }\NormalTok{dpq040 }\OperatorTok{+}\StringTok{ }\NormalTok{dpq050 }\OperatorTok{+}
 \StringTok{               }\NormalTok{dpq060 }\OperatorTok{+}\StringTok{ }\NormalTok{dpq070 }\OperatorTok{+}\StringTok{ }\NormalTok{dpq080 }\OperatorTok{+}\StringTok{ }\NormalTok{dpq090) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dep2 =} \KeywordTok{ifelse}\NormalTok{(dep }\OperatorTok{>=}\StringTok{ }\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{,}
                 \KeywordTok{ifelse}\NormalTok{(dep }\OperatorTok{<}\StringTok{ }\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\OtherTok{NA}\NormalTok{)))}
+\NormalTok{## Fix some placeholders}
+\NormalTok{df <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{asthma =} \KeywordTok{washer}\NormalTok{(mcq010, }\DecValTok{9}\NormalTok{),}
+         \DataTypeTok{asthma =} \KeywordTok{washer}\NormalTok{(asthma, }\DecValTok{2}\NormalTok{, }\DataTypeTok{value =} \DecValTok{0}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{sed =} \KeywordTok{washer}\NormalTok{(pad680, }\DecValTok{9999}\NormalTok{, }\DecValTok{7777}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
+\large
 Note:
 
 \begin{enumerate}
@@ -86,35 +111,23 @@ Note:
 
 \begin{frame}[fragile]{Running Logistic Regression}
 
-Since the outcome is binary, we use a statistical transformation to make
-things work well. This makes it so the outcome is in ``log-odds.'' A
-simple exponentiation of the coefficients and we get very useful ``odds
-ratios.''
+\Large
 
-Luckily, running a logistic regression is simple in \texttt{R}. We first
-create the binary outcome variable called \texttt{dep}. We use a new
-function called \texttt{mutate} to create a new variable (we could do
-this a number of ways but this is probably the cleanest way).
+\begin{itemize}
+\tightlist
+\item
+  \(\beta\)s are in ``log-odds''
+\item
+  \(e^{\beta}\) is an ``odds ratio''
+\end{itemize}
 
-\end{frame}
-
-\begin{frame}[fragile]{Running Logistic Regression}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## Fix some placeholders}
-\NormalTok{df <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{asthma =} \KeywordTok{washer}\NormalTok{(mcq010, }\DecValTok{9}\NormalTok{),}
-         \DataTypeTok{asthma =} \KeywordTok{washer}\NormalTok{(asthma, }\DecValTok{2}\NormalTok{, }\DataTypeTok{value =} \DecValTok{0}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{sed =} \KeywordTok{washer}\NormalTok{(pad680, }\DecValTok{9999}\NormalTok{, }\DecValTok{7777}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
+In \texttt{R}, this is simple.
 
 \end{frame}
 
 \begin{frame}[fragile]{Running Logistic Regression}
 
-Now let's run the logistic regression: \small
+\large
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -124,6 +137,12 @@ Now let's run the logistic regression: \small
 \KeywordTok{summary}\NormalTok{(l_fit)}
 \end{Highlighting}
 \end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Running Logistic Regression}
+
+\small
 
 \begin{verbatim}
 ## 
@@ -158,17 +177,27 @@ Now let's run the logistic regression: \small
 ## Number of Fisher Scoring iterations: 5
 \end{verbatim}
 
-\normalsize
+\Large
 
 \end{frame}
 
 \begin{frame}[fragile]{Output of Logistic Regression}
 
+\large
+
 We used \texttt{glm()} (stands for generalized linear model)
 
-The key to making it logistic, since you can use \texttt{glm()} for a
-linear model using maximum likelihood instead of \texttt{lm()} with
-least squares, is \texttt{family\ =\ "binomial"}
+\begin{itemize}
+\tightlist
+\item
+  The key to making it logistic, since you can use \texttt{glm()} for a
+  linear model using maximum likelihood instead of \texttt{lm()} with
+  least squares, is \texttt{family\ =\ "binomial"}
+\item
+  Default link in ``binomial'' is \texttt{logit}.
+\item
+  Can also do \texttt{probit} to use probit regression.
+\end{itemize}
 
 \end{frame}
 
@@ -176,17 +205,25 @@ least squares, is \texttt{family\ =\ "binomial"}
 
 \begin{frame}[fragile]{Poisson Regression}
 
-Again, we will use the \texttt{glm()} function.
+\large
 
-The difference here is we will be using an outcome that is a count
-variable. For example, the sedentary variable (\texttt{sed}) that we
-have in \texttt{df} is a count of the minutes of sedentary activity.
+Again, use the \texttt{glm()} function.
+
+\begin{itemize}
+\tightlist
+\item
+  The difference here is we will be using an outcome that is a count
+  variable.
+\item
+  For example, the sedentary variable (\texttt{sed}) that we have in
+  \texttt{df} is a count of the minutes of sedentary activity.
+\end{itemize}
 
 \end{frame}
 
 \begin{frame}[fragile]{Running Poisson Regression}
 
-\tiny
+\large
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -196,6 +233,12 @@ have in \texttt{df} is a count of the minutes of sedentary activity.
 \KeywordTok{summary}\NormalTok{(p_fit)}
 \end{Highlighting}
 \end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Running Poisson Regression}
+
+\tiny
 
 \begin{verbatim}
 ## 
@@ -229,21 +272,32 @@ have in \texttt{df} is a count of the minutes of sedentary activity.
 ## Number of Fisher Scoring iterations: 5
 \end{verbatim}
 
-\normalsize
+\end{frame}
+
+\begin{frame}{Running Poisson Regression}
+
+\small
+Sedentary may be over-dispersed:
+\includegraphics{05_GeneralizedLinearModels_files/figure-beamer/unnamed-chunk-7-1.pdf}
 
 \end{frame}
 
 \begin{frame}{Running Poisson Regression}
 
-Sedentary may be over-dispersed:
-\includegraphics{05_GeneralizedLinearModels_files/figure-beamer/unnamed-chunk-6-1.pdf}
-and so other methods related to poisson may be necessary. For this book,
-we are not going to be delving into these in depth but we will introduce
-some below.
+\Large
+and so other methods related to poisson may be necessary.
+
+\begin{itemize}
+\tightlist
+\item
+  See gamma, hurdle models, and negative binomial models next
+\end{itemize}
 
 \end{frame}
 
-\begin{frame}[fragile]{Gamma}
+\begin{frame}{Gamma}
+
+\Large
 
 \begin{itemize}
 \tightlist
@@ -253,6 +307,10 @@ some below.
 \item
   the outcome must have values \(> 0\).
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Gamma}
 
 \small
 
@@ -266,6 +324,12 @@ some below.
 \KeywordTok{summary}\NormalTok{(g_fit)}
 \end{Highlighting}
 \end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Gamma}
+
+\small
 
 \begin{verbatim}
 ## 
@@ -299,22 +363,35 @@ some below.
 ## Number of Fisher Scoring iterations: 5
 \end{verbatim}
 
-\normalsize
+\Large
 
 \end{frame}
 
 \begin{frame}[fragile]{Two-Part or Hurdle Models}
 
-We are going to use the \texttt{pscl} package to run a hurdle model.
-These models are built for situations where there is a count variable
-with many zeros (``zero-inflated''). The hurdle model makes slightly
-different assumptions regarding the zeros than the pure negative
-binomial that we present next. The hurdle consists of two models: one
-for whether the person had a zero or more (binomial) and if more than
-zero, how many (poisson).
+\large
+
+\begin{itemize}
+\tightlist
+\item
+  Use the \texttt{pscl} package to run a hurdle model.
+\item
+  These models are built for situations where there is a count variable
+  with many zeros (``zero-inflated'').
+\item
+  The hurdle model makes slightly different assumptions regarding the
+  zeros than the pure negative binomial that we present next.
+\item
+  The hurdle consists of two models: one for whether the person had a
+  zero or more (binomial) and if more than zero, how many (poisson).
+\end{itemize}
 
 To run a hurdle model, we are going to make a sedentary variable with
 many more zeros to illustrate and then we will run a hurdle model.
+
+\end{frame}
+
+\begin{frame}[fragile]{Two-Part or Hurdle Models}
 
 \small
 
@@ -333,6 +410,14 @@ many more zeros to illustrate and then we will run a hurdle model.
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
+\end{frame}
+
+\begin{frame}[fragile]{Two-Part or Hurdle Models}
+
+\tiny
+
 \begin{verbatim}
 ## 
 ## Call:
@@ -340,50 +425,71 @@ many more zeros to illustrate and then we will run a hurdle model.
 ## 
 ## Pearson residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -3.9753 -1.5078 -0.2439  1.2588 10.7813 
+## -3.9248 -1.4783 -0.2191  1.2563 11.0364 
 ## 
 ## Count model coefficients (truncated poisson with log link):
 ##                     Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)        5.6557869  0.0036967 1529.94   <2e-16 ***
-## asthma             0.0550741  0.0022613   24.36   <2e-16 ***
-## raceOtherHispanic  0.1164385  0.0042923   27.13   <2e-16 ***
-## raceWhite          0.3405040  0.0034764   97.95   <2e-16 ***
-## raceBlack          0.3437651  0.0035857   95.87   <2e-16 ***
-## raceOther          0.3530576  0.0037635   93.81   <2e-16 ***
-## famsize           -0.0203015  0.0005758  -35.26   <2e-16 ***
+## (Intercept)        5.6727458  0.0036627 1548.80   <2e-16 ***
+## asthma             0.0627030  0.0022628   27.71   <2e-16 ***
+## raceOtherHispanic  0.1201634  0.0042592   28.21   <2e-16 ***
+## raceWhite          0.3248979  0.0034416   94.40   <2e-16 ***
+## raceBlack          0.3337217  0.0035384   94.31   <2e-16 ***
+## raceOther          0.3359265  0.0037427   89.75   <2e-16 ***
+## famsize           -0.0200684  0.0005781  -34.71   <2e-16 ***
 ## Zero hurdle model coefficients (binomial with logit link):
 ##                   Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)        2.74919    0.22895  12.008   <2e-16 ***
-## asthma            -0.07983    0.14420  -0.554   0.5798    
-## raceOtherHispanic -0.29148    0.25258  -1.154   0.2485    
-## raceWhite         -0.22787    0.21350  -1.067   0.2858    
-## raceBlack         -0.44651    0.21650  -2.062   0.0392 *  
-## raceOther          0.11825    0.24634   0.480   0.6312    
-## famsize           -0.06432    0.03614  -1.780   0.0751 .  
+## (Intercept)        2.84791    0.23592  12.072   <2e-16 ***
+## asthma            -0.20907    0.13695  -1.527   0.1269    
+## raceOtherHispanic -0.57535    0.25379  -2.267   0.0234 *  
+## raceWhite         -0.48597    0.22052  -2.204   0.0275 *  
+## raceBlack         -0.31269    0.22953  -1.362   0.1731    
+## raceOther         -0.37082    0.24153  -1.535   0.1247    
+## famsize           -0.05421    0.03545  -1.529   0.1262    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 ## 
 ## Number of iterations in BFGS optimization: 12 
-## Log-likelihood: -2.327e+05 on 14 Df
+## Log-likelihood: -2.307e+05 on 14 Df
 \end{verbatim}
 
-\normalsize
+\Large
 
-Notice that the output has two parts: ``Count model coefficients
-(truncated poisson with log link):'' and ``Zero hurdle model
-coefficients (binomial with logit link):''. Together they tell us about
-the relationship between the predictors and a count variable with many
-zeros.
+\end{frame}
+
+\begin{frame}{Hurdle Models}
+
+\large
+
+Notice that the output has two parts:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  ``Count model coefficients (truncated poisson with log link):'' and
+\item
+  ``Zero hurdle model coefficients (binomial with logit link):''.
+\end{enumerate}
+
+Together they tell us about the relationship between the predictors and
+a count variable with many zeros.
 
 \end{frame}
 
 \begin{frame}[fragile]{Negative Binomial}
 
-Similar to that above, negative binomial is for zero-inflated count
-variables. It makes slightly different assumptions than the hurdle and
-doesn't use a two-part approach. In order to run a negative binomial
-model we'll use the \texttt{MASS} package and the \texttt{glm.nb()}
-function.
+\large
+
+\begin{itemize}
+\tightlist
+\item
+  negative binomial is also for zero-inflated count variables.
+\item
+  It makes slightly different assumptions than the hurdle and doesn't
+  use a two-part approach.
+\item
+  Use the \texttt{MASS} package and the \texttt{glm.nb()} function.
+\end{itemize}
 
 \small
 
@@ -396,7 +502,13 @@ function.
 \end{Highlighting}
 \end{Shaded}
 
-\normalsize
+\end{frame}
+
+\begin{frame}{Negative Binomial}
+
+\small
+
+\Large
 
 Note that this model is not really appropriate because our data is
 somewhat contrived.
@@ -407,18 +519,32 @@ somewhat contrived.
 
 \begin{frame}{Beta Regression}
 
-For outcomes that are bound between a lower and upper bound, Beta
-Regression is a great method. For example, if we are looking at test
-scores that are bound between 0 and 100. It is a very flexible method
-and allows for some extra analysis regarding the variation.
+\large
+
+\begin{itemize}
+\tightlist
+\item
+  For outcomes that are bound between a lower and upper bound
+\item
+  For example, if we are looking at test scores that are bound between 0
+  and 100.
+\item
+  It is a very flexible method and allows for some extra analysis
+  regarding the variation.
+\end{itemize}
 
 \end{frame}
 
 \begin{frame}[fragile]{Running Beta Regression}
 
-For this, we are going to use the \texttt{betareg} package. But first,
-we are going to reach a little and create a ficticiously bound variable
-in the data set.
+\begin{itemize}
+\tightlist
+\item
+  Use the \texttt{betareg} package.
+\item
+  But first, we are going to reach a little and create a ficticiously
+  bound variable in the data set.
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -437,6 +563,8 @@ in the data set.
 
 \begin{frame}[fragile]{Running Beta Regression}
 
+\tiny
+
 \begin{verbatim}
 ## 
 ## Call:
@@ -444,33 +572,46 @@ in the data set.
 ## 
 ## Standardized weighted residuals 2:
 ##     Min      1Q  Median      3Q     Max 
-## -2.0937 -0.7133 -0.0425  0.6083  2.9121 
+## -2.0364 -0.6739 -0.0598  0.6311  2.9235 
 ## 
 ## Coefficients (mean model with logit link):
 ##                    Estimate Std. Error z value Pr(>|z|)   
-## (Intercept)        0.183438   0.063182   2.903  0.00369 **
-## asthma             0.079145   0.043669   1.812  0.06993 . 
-## raceOtherHispanic -0.028195   0.071914  -0.392  0.69501   
-## raceWhite         -0.052655   0.058669  -0.897  0.36946   
-## raceBlack         -0.013716   0.060909  -0.225  0.82184   
-## raceOther          0.005879   0.065285   0.090  0.92825   
-## famsize           -0.017376   0.010808  -1.608  0.10789   
+## (Intercept)        0.195018   0.063399   3.076   0.0021 **
+## asthma            -0.057137   0.043789  -1.305   0.1920   
+## raceOtherHispanic -0.053873   0.072158  -0.747   0.4553   
+## raceWhite         -0.025079   0.058871  -0.426   0.6701   
+## raceBlack         -0.059966   0.061116  -0.981   0.3265   
+## raceOther         -0.077520   0.065502  -1.183   0.2366   
+## famsize           -0.009472   0.010843  -0.874   0.3824   
 ## 
 ## Phi coefficients (precision model with identity link):
 ##       Estimate Std. Error z value Pr(>|z|)    
-## (phi)  2.48105    0.04521   54.88   <2e-16 ***
+## (phi)  2.45394    0.04465   54.95   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 ## 
 ## Type of estimator: ML (maximum likelihood)
-## Log-likelihood:    92 on 8 Df
-## Pseudo R-squared: 0.001691
-## Number of iterations: 17 (BFGS) + 1 (Fisher scoring)
+## Log-likelihood:  83.2 on 8 Df
+## Pseudo R-squared: 0.00112
+## Number of iterations: 15 (BFGS) + 1 (Fisher scoring)
 \end{verbatim}
 
-The output provides coefficients and the ``Phi'' coefficients. Both are
-important parts of using beta regression but we are not going to discuss
-it here.
+\Large
+
+\end{frame}
+
+\begin{frame}{Beta Regression}
+
+\large
+
+\begin{itemize}
+\tightlist
+\item
+  The output provides coefficients and the ``Phi'' coefficients.
+\item
+  Both are important parts of using beta regression but we are not going
+  to discuss it here.
+\end{itemize}
 
 \end{frame}
 
@@ -478,20 +619,43 @@ it here.
 
 \begin{frame}{Conclusions}
 
-There are many resources available to learn more about beta regression
-and each of these GLM's. As for now, we are going to move on to more
-complex modeling where there are clustering or repeated measures in the
-data.
+\large
+
+There are many resources available to learn more about each of these
+GLM's.
+
+As for now, we are going to move on to more complex modeling where there
+are clustering or repeated measures in the data.
 
 \end{frame}
 
 \begin{frame}[fragile]{Conclusions}
 
+\large
+
 One of the great things about \texttt{R} is that most modeling is very
-similar to the basic \texttt{lm()} function. In all of these GLM's the
-arguments are nearly all the same: a formula, the data, and family of
-model. As you'll see for Multilevel and Other Models chapters, this does
-not change much. Having a good start with basic models and GLM's gets
-you ready for nearly every other modeling type in \texttt{R}.
+similar to the basic \texttt{lm()} function.
+
+\begin{itemize}
+\tightlist
+\item
+  In all of these GLM's the arguments are nearly all the same:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    a formula,
+  \item
+    the data, and
+  \item
+    family of model.
+  \end{itemize}
+\item
+  As you'll see for Multilevel and Other Models chapters, this does not
+  change much.
+\item
+  Having a good start with basic models and GLM's gets you ready for
+  nearly every other modeling type in \texttt{R}.
+\end{itemize}
 
 \end{frame}
